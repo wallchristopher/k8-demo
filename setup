@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd $HOME/Desktop
+aws eks update-kubeconfig --region us-west-2 --name k8s-demo --kubeconfig=./config
+mv $HOME/Desktop/config ~/.kube/
