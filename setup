@@ -1,5 +1,5 @@
 #!/bin/bash
 
-cd $HOME/Desktop
-aws eks update-kubeconfig --region us-west-2 --name k8s-demo --kubeconfig=./config
-mv $HOME/Desktop/config ~/.kube/
+aws eks update-kubeconfig --region us-west-2 --name k8s-demo
+
+helm install nginx oci://registry-1.docker.io/bitnamicharts/nginx -f ./apps/demo/values.yaml
