@@ -53,9 +53,6 @@ module "eks" {
         selectors = [
           {
             namespace = "default"
-            labels = {
-              app = "demo"
-            }
           }
         ]
 
