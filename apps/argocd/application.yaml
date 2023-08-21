@@ -7,8 +7,16 @@ spec:
   project: default
   source:
     repoURL: https://github.com/wallchristopher/k8s-demo.git
-    targetRevision: HEAD
     path: apps/demo
+    targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc
     namespace: default
+  syncPolicy:
+    automated: {}
+    retry:
+      limit: 2
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m0s
