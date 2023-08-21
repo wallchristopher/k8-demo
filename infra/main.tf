@@ -68,6 +68,26 @@ module "eks" {
           delete = "20m"
         }
       }
+      argocd = {
+        name = "argocd"
+        selectors = [
+          {
+            namespace = "argocd"
+          }
+        ]
+
+        # Using specific subnets instead of the subnets supplied for the cluster itself
+        subnet_ids = [module.vpc.private_subnets[1]]
+
+        tags = {
+          Owner = "secondary"
+        }
+
+        timeouts = {
+          create = "20m"
+          delete = "20m"
+        }
+      }
     },
     { for i in range(3) :
       "kube-system-${element(split("-", local.azs[i]), 2)}" => {
