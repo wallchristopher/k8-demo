@@ -5,4 +5,6 @@ terraform -chdir=./infra apply
 aws eks update-kubeconfig --name k8s-demo
 
 helm repo add argo https://argoproj.github.io/argo-helm
-helm install my-argo-cd argo/argo-cd
+helm install argocd argo/argo-cd --namespace argocd --create-namespace
+
+kubectl apply -n argocd -f apps/argocd/application.yaml
