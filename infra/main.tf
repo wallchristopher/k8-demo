@@ -59,10 +59,6 @@ module "eks" {
         # Using specific subnets instead of the subnets supplied for the cluster itself
         subnet_ids = [module.vpc.private_subnets[1]]
 
-        tags = {
-          Owner = "secondary"
-        }
-
         timeouts = {
           create = "20m"
           delete = "20m"
@@ -79,9 +75,21 @@ module "eks" {
         # Using specific subnets instead of the subnets supplied for the cluster itself
         subnet_ids = [module.vpc.private_subnets[1]]
 
-        tags = {
-          Owner = "secondary"
+        timeouts = {
+          create = "20m"
+          delete = "20m"
         }
+      }
+      monitoring = {
+        name = "monitoring"
+        selectors = [
+          {
+            namespace = "monitoring"
+          }
+        ]
+
+        # Using specific subnets instead of the subnets supplied for the cluster itself
+        subnet_ids = [module.vpc.private_subnets[1]]
 
         timeouts = {
           create = "20m"
