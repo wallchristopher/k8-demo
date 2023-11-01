@@ -6,5 +6,4 @@ aws eks update-kubeconfig --name k8s-demo
 
 helm repo add argo https://argoproj.github.io/argo-helm
 helm install argocd argo/argo-cd --namespace argocd --create-namespace
-
-kubectl apply -n argocd -f apps/argocd/application.yaml
+helm upgrade argocd ./bootstrap/argo/ --namespace argocd --create-namespace -f ./bootstrap/argo/values.yaml
