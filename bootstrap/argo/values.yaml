@@ -9,8 +9,23 @@ argo-cd:
         name: argo-helm
         type: helm
         url: https://argoproj.github.io/argo-helm
+    timeout.reconciliation: 60s
 
 argocd-apps:
+  projects:
+    - name: core
+      description: Contains applications that are always deployed.
+      destinations:
+        - namespace: '*'
+          server: '*'
+      sourceRepos:
+        - '*'
+      clusterResourceWhitelist:
+        - group: '*'
+          kind: '*'
+      namespaceResourceWhitelist:
+        - group: '*'
+          kind: '*'
   applications:
     - name: argocd
       namespace: argocd
