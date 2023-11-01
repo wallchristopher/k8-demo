@@ -1,0 +1,27 @@
+argo-cd:
+  configs:
+    repositories:
+      k8s-demo:
+        name: k8s-demo
+        type: git
+        url: https://github.com/wallchristopher/k8s-demo.git
+      argo-helm:
+        name: argo-helm
+        type: helm
+        url: https://argoproj.github.io/argo-helm
+
+argocd-apps:
+  applications:
+    - name: argocd
+      namespace: argocd
+      project: default
+      source:
+        helm:
+          valueFiles:
+            - values.yaml
+        repoURL: https://github.com/wallchristopher/k8s-demo.git
+        targetRevision: HEAD
+        path: bootstrap/argo
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: argocd
