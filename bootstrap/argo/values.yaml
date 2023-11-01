@@ -1,4 +1,6 @@
 argo-cd:
+  server:
+    replicas: 2
   configs:
     repositories:
       k8s-demo:
