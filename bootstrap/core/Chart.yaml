@@ -9,6 +9,6 @@ sources:
   - https://github.com/wallchristopher/k8s-demo
 
 dependencies:
-  - name: prometheus-community/kube-prometheus-stack
+  - name: kube-prometheus-stack
     version: 52.1.0
     repository: https://prometheus-community.github.io/helm-charts
