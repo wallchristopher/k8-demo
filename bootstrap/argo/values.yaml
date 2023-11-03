@@ -13,7 +13,7 @@ argo-cd:
         url: https://argoproj.github.io/argo-helm
     timeout.reconciliation: 120s
   controller:
-    replicas: 1
+    replicas: 2
   server:
     autoscaling:
       enabled: true
