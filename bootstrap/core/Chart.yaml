@@ -6,9 +6,4 @@ description: Core components always deployed to the cluster
 type: application
 
 sources:
-  - https://github.com/wallchristopher/k8s-demo
-
-dependencies:
-  - name: kube-prometheus-stack
-    version: 52.1.0
-    repository: https://prometheus-community.github.io/helm-charts
+  - https://github.com/wallchristopher/k8s-platform

@@ -1,10 +1,10 @@
 argo-cd:
   configs:
     repositories:
-      k8s-demo:
-        name: k8s-demo
+      k8s-platform:
+        name: k8s-platform
         type: git
-        url: https://github.com/wallchristopher/k8s-demo.git
+        url: https://github.com/wallchristopher/k8s-platform.git
       argo-helm:
         name: argo-helm
         type: helm
@@ -34,7 +34,7 @@ argocd-apps:
         helm:
           valueFiles:
             - values.yaml
-        repoURL: https://github.com/wallchristopher/k8s-demo.git
+        repoURL: https://github.com/wallchristopher/k8s-platform.git
         targetRevision: HEAD
         path: bootstrap/argo
       destination:
@@ -47,10 +47,8 @@ argocd-apps:
       namespace: argocd
       project: core
       source:
-        helm:
-          valueFiles:
-            - values.yaml
-        repoURL: https://github.com/wallchristopher/k8s-demo.git
+        helm: {}
+        repoURL: https://github.com/wallchristopher/k8s-platform.git
         targetRevision: HEAD
         path: bootstrap/core
       destination:
