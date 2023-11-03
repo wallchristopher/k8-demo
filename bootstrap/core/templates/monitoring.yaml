@@ -6,16 +6,18 @@ metadata:
 spec:
   project: core
   source:
-    repoURL: 'https://github.com/wallchristopher/k8s-platform.git'
-    targetRevision: 'HEAD'
-    path: '/bootstrap/monitoring'
+    repoURL: https://github.com/wallchristopher/k8s-platform.git
+    targetRevision: HEAD
+    path: bootstrap/monitoring
     helm:
       valueFiles:
         - values.yaml
   destination:
-    server: 'https://kubernetes.default.svc'
+    server: https://kubernetes.default.svc
     namespace: monitoring
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
