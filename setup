@@ -2,7 +2,7 @@
 
 terraform -chdir=./infra apply
 
-aws eks update-kubeconfig --name k8s-demo
+aws eks update-kubeconfig --name k8s-platform
 
 helm repo add argo https://argoproj.github.io/argo-helm
 helm install argocd argo/argo-cd --namespace argocd --create-namespace
