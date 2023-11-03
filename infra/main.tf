@@ -1,5 +1,5 @@
 locals {
-  name            = "k8s-demo"
+  name            = "k8s-platform"
   cluster_version = "1.28"
 
   vpc_cidr = "10.0.0.0/16"
@@ -48,8 +48,8 @@ module "eks" {
 
   fargate_profiles = merge(
     {
-      k8s-demo = {
-        name = "k8s-demo"
+      k8s-platform = {
+        name = "k8s-platform"
         selectors = [
           {
             namespace = "default"
