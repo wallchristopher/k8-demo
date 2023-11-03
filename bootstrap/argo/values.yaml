@@ -9,7 +9,7 @@ argo-cd:
         name: argo-helm
         type: helm
         url: https://argoproj.github.io/argo-helm
-    timeout.reconciliation: 60s
+    timeout.reconciliation: 120s
 
 argocd-apps:
   projects:
