@@ -15,13 +15,12 @@ argo-cd:
   controller:
     replicas: 2
     resources:
+      limits:
+        cpu: 2
+        memory: 4Gi
       requests:
-        limits:
-          cpu: "2"
-          memory: 4Gi
-        requests:
-          cpu: "2"
-          memory: 2Gi
+        cpu: 1
+        memory: 2Gi
   server:
     autoscaling:
       enabled: true
