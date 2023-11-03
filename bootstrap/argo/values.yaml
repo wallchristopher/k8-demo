@@ -14,6 +14,14 @@ argo-cd:
     timeout.reconciliation: 120s
   controller:
     replicas: 2
+    resources:
+      requests:
+        limits:
+          cpu: "2"
+          memory: 4Gi
+        requests:
+          cpu: "2"
+          memory: 2Gi
   server:
     autoscaling:
       enabled: true
