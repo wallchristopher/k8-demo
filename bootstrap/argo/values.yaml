@@ -1,4 +1,6 @@
 argo-cd:
+  applicationSet:
+    replicas: 2
   configs:
     repositories:
       k8s-platform:
@@ -10,6 +12,18 @@ argo-cd:
         type: helm
         url: https://argoproj.github.io/argo-helm
     timeout.reconciliation: 120s
+  controller:
+    replicas: 1
+  server:
+    autoscaling:
+      enabled: true
+      minReplicas: 2
+  redis-ha:
+    enabled: true
+  repoServer:
+    autoscaling:
+      enabled: true
+      minReplicas: 2
 
 argocd-apps:
   projects:
