@@ -1,5 +1,5 @@
 #!/bin/bash
-
+terraform -chdir=./infra init
 terraform -chdir=./infra apply
 
 aws eks update-kubeconfig --name k8s-platform
