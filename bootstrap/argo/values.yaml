@@ -70,6 +70,9 @@ argocd-apps:
           repoURL: https://github.com/wallchristopher/k8s-platform.git
           targetRevision: HEAD
           path: '{{path}}'
+          helm:
+            valueFiles:
+            - values.yaml
         destination:
           server: https://kubernetes.default.svc
           namespace: '{{path.basename}}'
