@@ -1,3 +1,2 @@
-monitoring:
-  nodeExporter:
-    enabled: false
+nodeExporter:
+  enabled: false
