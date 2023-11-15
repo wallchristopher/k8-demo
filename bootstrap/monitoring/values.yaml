@@ -3,7 +3,7 @@ kube-prometheus-stack:
     enabled: false
   alertmanager:
     alertmanagerSpec:
-      replicas: 3
+      replicas: 4
   prometheus:
     prometheusSpec:
       resources:
