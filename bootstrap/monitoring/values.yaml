@@ -10,7 +10,7 @@ kube-prometheus-stack:
           whenUnsatisfiable: DoNotSchedule
           labelSelector:
             matchLabels:
-              app: alertmanager
+              app.kubernetes.io/name: alertmanager
   prometheus:
     prometheusSpec:
       resources:
