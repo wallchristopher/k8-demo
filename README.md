@@ -9,7 +9,7 @@ Kuberentes platform running on EKS Fargate compute nodes.
 Pre-requisites:
 
 - Target AWS account with necessary permissions
-- AWS CLI configured to use the target account `aws confuigure`
+- AWS CLI configured to use the target account `aws configure`
 - Terraform
 - Kubectl
 - Helm
