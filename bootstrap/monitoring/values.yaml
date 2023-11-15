@@ -1,9 +1,12 @@
 kube-prometheus-stack:
   nodeExporter:
     enabled: false
+  alertmanager:
+    alertmanagerSpec:
+      replicas: 3
   prometheus:
     prometheusSpec:
       resources:
         requests:
-          memory: 2Gi
+          memory: 1Gi
           cpu: 2
