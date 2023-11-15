@@ -9,4 +9,4 @@ kube-prometheus-stack:
       resources:
         requests:
           memory: 1Gi
-          cpu: 2
+          cpu: 1
