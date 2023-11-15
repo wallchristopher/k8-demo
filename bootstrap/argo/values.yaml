@@ -47,6 +47,20 @@ argocd-apps:
       namespaceResourceWhitelist:
         - group: '*'
           kind: '*'
+  applications:
+    - name: argocd
+      namespace: argocd
+      project: default
+      source:
+        helm:
+          valueFiles:
+            - values.yaml
+        repoURL: https://github.com/wallchristopher/k8s-platform.git
+        targetRevision: HEAD
+        path: bootstrap/argo
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: argocd
   applicationsets:
   - name: core
     namespace: argocd
