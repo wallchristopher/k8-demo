@@ -61,6 +61,9 @@ argocd-apps:
       destination:
         server: https://kubernetes.default.svc
         namespace: argocd
+      syncPolicy:
+        automated:
+          selfHeal: true
   applicationsets:
   - name: core
     namespace: argocd
