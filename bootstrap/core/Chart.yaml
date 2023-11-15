@@ -1,9 +1,0 @@
-apiVersion: v2
-name: core
-version: 0.0.1
-description: Core components always deployed to the cluster
-
-type: application
-
-sources:
-  - https://github.com/wallchristopher/k8s-platform
