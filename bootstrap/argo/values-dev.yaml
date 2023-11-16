@@ -1,0 +1,82 @@
+argo-cd:
+  configs:
+    repositories:
+      k8s-platform:
+        name: k8s-platform
+        type: git
+        url: https://github.com/wallchristopher/k8s-platform.git
+      argo-helm:
+        name: argo-helm
+        type: helm
+        url: https://argoproj.github.io/argo-helm
+    timeout.reconciliation: 120s
+
+argocd-apps:
+  projects:
+    - name: core
+      description: Contains applications that are always deployed.
+      destinations:
+        - namespace: '*'
+          server: '*'
+      sourceRepos:
+        - '*'
+      clusterResourceWhitelist:
+        - group: '*'
+          kind: '*'
+      namespaceResourceWhitelist:
+        - group: '*'
+          kind: '*'
+  applications:
+    - name: argocd
+      namespace: argocd
+      project: default
+      source:
+        helm:
+          valueFiles:
+            - values-dev.yaml
+        repoURL: https://github.com/wallchristopher/k8s-platform.git
+        targetRevision: HEAD
+        path: bootstrap/argo
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: argocd
+      syncPolicy:
+        automated:
+          selfHeal: true
+  applicationsets:
+  - name: core
+    namespace: argocd
+    additionalLabels: {}
+    additionalAnnotations: {}
+    generators:
+    - git:
+        repoURL: https://github.com/wallchristopher/k8s-platform.git
+        revision: HEAD
+        directories:
+        - path: bootstrap/monitoring
+    template:
+      metadata:
+        name: '{{path.basename}}'
+        labels:
+          project: '{{path.basename}}'
+        annotations: {}
+      spec:
+        project: core
+        source:
+          repoURL: https://github.com/wallchristopher/k8s-platform.git
+          targetRevision: HEAD
+          path: '{{path}}'
+          helm:
+            valueFiles:
+            - values-dev.yaml
+        destination:
+          server: https://kubernetes.default.svc
+          namespace: '{{path.basename}}'
+        syncPolicy:
+          automated:
+            selfHeal: true
+          syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+    syncPolicy:
+      preserveResourcesOnDeletion: false
