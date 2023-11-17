@@ -1,0 +1,4 @@
+kube-prometheus-stack:
+  alertmanager:
+    alertmanagerSpec:
+      replicas: 2

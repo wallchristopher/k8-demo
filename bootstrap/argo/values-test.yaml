@@ -1,0 +1,9 @@
+argocd-apps:
+  applicationsets:
+  - name: core
+    template:
+      spec:
+        source:
+          helm:
+            valueFiles:
+            - values-test.yaml
