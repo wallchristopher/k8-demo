@@ -1,7 +1,0 @@
-kube-prometheus-stack:
-  prometheus:
-    prometheusSpec:
-      resources:
-        requests:
-          memory: 512Mi
-          cpu: 1
