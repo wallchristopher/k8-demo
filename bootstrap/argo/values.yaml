@@ -33,7 +33,7 @@ argocd-apps:
       source:
         helm:
           valueFiles:
-            - values-dev.yaml
+            - values.yaml
         repoURL: https://github.com/wallchristopher/k8s-platform.git
         targetRevision: HEAD
         path: bootstrap/argo
@@ -68,7 +68,7 @@ argocd-apps:
           path: '{{path}}'
           helm:
             valueFiles:
-            - values-dev.yaml
+            - values.yaml
         destination:
           server: https://kubernetes.default.svc
           namespace: '{{path.basename}}'

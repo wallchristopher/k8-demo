@@ -1,17 +1,6 @@
 argo-cd:
   applicationSet:
     replicas: 2
-  configs:
-    repositories:
-      k8s-platform:
-        name: k8s-platform
-        type: git
-        url: https://github.com/wallchristopher/k8s-platform.git
-      argo-helm:
-        name: argo-helm
-        type: helm
-        url: https://argoproj.github.io/argo-helm
-    timeout.reconciliation: 120s
   controller:
     replicas: 2
     resources:
@@ -33,20 +22,6 @@ argo-cd:
       minReplicas: 2
 
 argocd-apps:
-  projects:
-    - name: core
-      description: Contains applications that are always deployed.
-      destinations:
-        - namespace: '*'
-          server: '*'
-      sourceRepos:
-        - '*'
-      clusterResourceWhitelist:
-        - group: '*'
-          kind: '*'
-      namespaceResourceWhitelist:
-        - group: '*'
-          kind: '*'
   applications:
     - name: argocd
       namespace: argocd
@@ -54,7 +29,7 @@ argocd-apps:
       source:
         helm:
           valueFiles:
-            - values.yaml
+            - values-prod.yaml
         repoURL: https://github.com/wallchristopher/k8s-platform.git
         targetRevision: HEAD
         path: bootstrap/argo
@@ -89,7 +64,7 @@ argocd-apps:
           path: '{{path}}'
           helm:
             valueFiles:
-            - values.yaml
+            - values-prod.yaml
         destination:
           server: https://kubernetes.default.svc
           namespace: '{{path.basename}}'
