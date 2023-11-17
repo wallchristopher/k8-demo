@@ -1,9 +1,37 @@
 argocd-apps:
-  applicationsets:
   - name: core
+    namespace: argocd
+    additionalLabels: {}
+    additionalAnnotations: {}
+    generators:
+    - git:
+        repoURL: https://github.com/wallchristopher/k8s-platform.git
+        revision: HEAD
+        directories:
+        - path: bootstrap/monitoring
     template:
+      metadata:
+        name: '{{path.basename}}'
+        labels:
+          project: '{{path.basename}}'
+        annotations: {}
       spec:
+        project: core
         source:
+          repoURL: https://github.com/wallchristopher/k8s-platform.git
+          targetRevision: HEAD
+          path: '{{path}}'
           helm:
             valueFiles:
             - values-test.yaml
+        destination:
+          server: https://kubernetes.default.svc
+          namespace: '{{path.basename}}'
+        syncPolicy:
+          automated:
+            selfHeal: true
+          syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+    syncPolicy:
+      preserveResourcesOnDeletion: false
