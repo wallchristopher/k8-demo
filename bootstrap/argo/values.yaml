@@ -33,7 +33,7 @@ argocd-apps:
       source:
         helm:
           valueFiles:
-            - values.yaml
+            - values-test.yaml
         repoURL: https://github.com/wallchristopher/k8s-platform.git
         targetRevision: HEAD
         path: bootstrap/argo
