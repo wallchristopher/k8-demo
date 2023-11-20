@@ -6,6 +6,7 @@ kube-prometheus-stack:
     enabled: false
   prometheus:
     prometheusSpec:
+      replicas: 3
       resources:
         requests:
           memory: 1Gi
