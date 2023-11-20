@@ -3,7 +3,7 @@ kube-prometheus-stack:
     alertmanagerSpec:
       replicas: 4
       requests:
-        memory: 500Mi
+        memory: 1Gi
   nodeExporter:
     enabled: false
   prometheus:
