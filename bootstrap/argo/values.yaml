@@ -1,4 +1,10 @@
 argo-cd:
+  applicationSet:
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        namespace: monitoring
   configs:
     repositories:
       k8s-platform:
