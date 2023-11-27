@@ -1,17 +1,4 @@
 kube-prometheus-stack:
-  alertmanager:
-    alertmanagerSpec:
-      replicas: 1
-      resources:
-        requests:
-          memory: 500Mi
-      topologySpreadConstraints:
-        - maxSkew: 1 # ratio to other pods within the same "domain"
-          topologyKey: topology.kubernetes.io/zone # where the scheduler will schedule pods to reduce screw
-          whenUnsatisfiable: DoNotSchedule # or "ScheduleAnyway"
-          labelSelector: # uses below value to calculate the skew
-            matchLabels:
-              app.kubernetes.io/name: alertmanager
   nodeExporter:
     enabled: false
   prometheus:
