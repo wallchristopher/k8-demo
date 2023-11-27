@@ -5,6 +5,12 @@ argo-cd:
       serviceMonitor:
         enabled: true
         namespace: monitoring
+  controller:
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        namespace: monitoring
   configs:
     repositories:
       k8s-platform:
@@ -16,6 +22,30 @@ argo-cd:
         type: helm
         url: https://argoproj.github.io/argo-helm
     timeout.reconciliation: 120s
+  dex:
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        namespace: monitoring
+  redis:
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        namespace: monitoring
+  server:
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        namespace: monitoring
+  repoServer:
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        namespace: monitoring
 
 argocd-apps:
   projects:
