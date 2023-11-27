@@ -3,6 +3,7 @@ kube-prometheus-stack:
     enabled: false
   prometheus:
     prometheusSpec:
+      serviceMonitorSelectorNilUsesHelmValues: false
       resources:
         requests:
           memory: 1Gi
