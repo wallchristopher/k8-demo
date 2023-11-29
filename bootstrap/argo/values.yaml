@@ -85,29 +85,30 @@ argocd-apps:
     additionalLabels: {}
     additionalAnnotations: {}
     generators:
-    - git:
-        repoURL: https://github.com/wallchristopher/k8s-platform.git
-        revision: HEAD
-        directories:
-        - path: bootstrap/monitoring
-        - path: bootstrap/istio
+    - list:
+        elements:
+        - name: monitoring
+          namespace: monitoring
+        - name: istio
+          namespace: istio-system
     template:
       metadata:
-        name: '{{path.basename}}'
+        name: '{{name}}'
         labels:
-          project: '{{path.basename}}'
+          project: '{{name}}'
         annotations: {}
       spec:
         project: core
         source:
           repoURL: https://github.com/wallchristopher/k8s-platform.git
           targetRevision: HEAD
-          path: '{{path}}'
+          path: 'bootstrap/{{name}}'
           helm:
             valueFiles:
             - values.yaml
         destination:
           server: https://kubernetes.default.svc
+          namespace: '{{namespace}}'
         syncPolicy:
           automated:
             selfHeal: true
