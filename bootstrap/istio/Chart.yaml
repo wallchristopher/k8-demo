@@ -5,6 +5,9 @@ type: application
 version: 0.0.1
 
 dependencies:
-  - name: istio
+  - name: base
+    version: 1.20.0
+    repository: https://istio-release.storage.googleapis.com/charts
+  - name: istiod
     version: 1.20.0
     repository: https://istio-release.storage.googleapis.com/charts
