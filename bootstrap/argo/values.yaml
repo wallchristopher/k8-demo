@@ -90,6 +90,7 @@ argocd-apps:
         revision: HEAD
         directories:
         - path: bootstrap/monitoring
+        - path: bootstrap/istio
     template:
       metadata:
         name: '{{path.basename}}'
