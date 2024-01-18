@@ -4,3 +4,5 @@ core:
   cve:
     scanner:
       replicas: 1
+  k3s:
+    enabled: true
