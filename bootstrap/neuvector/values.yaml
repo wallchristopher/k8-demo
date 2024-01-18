@@ -6,3 +6,6 @@ core:
       replicas: 1
   k3s:
     enabled: true
+  manager:
+    svc:
+      type: ClusterIP
