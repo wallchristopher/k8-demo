@@ -1,0 +1,10 @@
+apiVersion: v2
+name: neuvector
+description: A Helm chart for Kubernetes that installs neuvector
+type: application
+version: 0.0.1
+
+dependencies:
+  - name: neuvector/core
+    version: 2.6.6
+    repository: https://neuvector.github.io/neuvector-helm/
