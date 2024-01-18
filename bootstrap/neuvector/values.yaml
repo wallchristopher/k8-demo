@@ -1,4 +1,4 @@
-neuvector:
+core:
   contoller:
     replicas: 1
   cve:
