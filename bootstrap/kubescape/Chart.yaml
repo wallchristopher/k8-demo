@@ -1,0 +1,10 @@
+apiVersion: v2
+name: kubescape
+description: A helm chart that pulls in the kubescape
+type: application
+version: 0.0.1
+
+dependencies:
+  - name: kubescape-operator
+    version: 1.17.3
+    repository: https://kubescape.github.io/helm-charts/
