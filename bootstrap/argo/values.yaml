@@ -91,6 +91,8 @@ argocd-apps:
           namespace: monitoring
         - name: istio
           namespace: istio-system
+        - name: kubescape
+          namespace: kubescape
     template:
       metadata:
         name: '{{name}}'
