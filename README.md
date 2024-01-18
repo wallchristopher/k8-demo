@@ -1,6 +1,6 @@
 # k8s-platform
 
-Kubernetes platform running primarily on EKS Fargate compute nodes but with some EKS Managed Node capabilities.
+Kubernetes platform that leverages diffent tools to help engineers build, deploy, run, maintain their code in a Kubernetes ecosystem.
 
 > To play around with Kubernetes and various open source tools
 
@@ -13,6 +13,8 @@ Pre-requisites:
 - [Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli)
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 - [Helm](https://helm.sh/docs/intro/install/)
+
+### Production Deployment
 
 Run the following commands within the root of this repo to deploy the platform to the target AWS account.
 
@@ -34,10 +36,10 @@ helm upgrade argocd ./bootstrap/argo/ \
 
 The [setup](setup) script contains the above commands with some error handling.
 
-## Start Developing
+### Local Development
 
-To deploy to a local cluster within any cloud provider requiremnts. Refer to the [local development](docs/local-development.md) documentation.
+To deploy to a local cluster without any cloud provider requiremnts. Refer to the [local development](docs/local-development.md) documentation.
 
 ## Documentation
 
-Further documentation is located within the docs directory.
+Further documentation is located within the [docs](docs) directory.
