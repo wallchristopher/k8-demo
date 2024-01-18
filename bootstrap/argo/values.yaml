@@ -91,8 +91,6 @@ argocd-apps:
           namespace: monitoring
         - name: istio
           namespace: istio-system
-        - name: neuvector
-          namespace: neuvector
     template:
       metadata:
         name: '{{name}}'
