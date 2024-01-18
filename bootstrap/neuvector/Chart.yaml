@@ -5,6 +5,6 @@ type: application
 version: 0.0.1
 
 dependencies:
-  - name: neuvector/core
+  - name: core
     version: 2.6.6
     repository: https://neuvector.github.io/neuvector-helm/
