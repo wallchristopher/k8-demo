@@ -2,7 +2,9 @@
 
 Kubernetes platform that leverages diffent tools to help engineers build, deploy, run, maintain their code in a Kubernetes ecosystem.
 
-> To play around with Kubernetes and various open source tools
+## Why?
+
+To play around with Kubernetes and various open source tools inside to see how they work and how they can be used to help engineers.
 
 ## Getting Started
 
