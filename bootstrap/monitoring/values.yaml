@@ -7,3 +7,5 @@ kube-prometheus-stack:
     prometheusSpec:
       serviceMonitorSelectorNilUsesHelmValues: false
       replicas: 2
+      thanos:
+        create: true
