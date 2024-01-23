@@ -8,4 +8,7 @@ kube-prometheus-stack:
       serviceMonitorSelectorNilUsesHelmValues: false
       replicas: 2
       thanos:
-        create: true
+        ObjectStorageConfig:
+          type: FILESYSEM
+          config:
+            directory: /tmp
