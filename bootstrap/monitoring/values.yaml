@@ -1,5 +1,9 @@
 kube-prometheus-stack:
   prometheus:
+    thanosService:
+      enabled: true
+    thanosServiceMonitor:
+      enabled: true
     prometheusSpec:
       serviceMonitorSelectorNilUsesHelmValues: false
       replicas: 2
