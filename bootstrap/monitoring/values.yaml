@@ -9,6 +9,7 @@ kube-prometheus-stack:
       replicas: 2
       thanos:
         ObjectStorageConfig:
-          type: FILESYSEM
-          config:
-            directory: /tmp
+          secret:
+            type: FILESYSEM
+            config:
+              directory: /tmp
