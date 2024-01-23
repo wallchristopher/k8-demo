@@ -11,7 +11,6 @@ provider "aws" {
 locals {
   host                   = var.use_fargate_eks ? module.fargate_eks[0].cluster_endpoint : module.node_eks[0].cluster_endpoint
   cluster_ca_certificate = var.use_fargate_eks ? module.fargate_eks[0].cluster_certificate_authority_data : module.node_eks[0].cluster_certificate_authority_data
-  cluster_name           = var.use_fargate_eks ? module.fargate_eks[0].cluster_name : module.node_eks[0].cluster_name
 }
 
 provider "kubernetes" {
@@ -22,6 +21,9 @@ provider "kubernetes" {
     api_version = "client.authentication.k8s.io/v1"
     command     = "aws"
     # This requires the awscli to be installed locally where Terraform is executed
-    args = ["eks", "get-token", "--cluster-name", local.cluster_name]
+    args = ["eks", "get-token", "--cluster-name", local.name]
   }
+}
+
+provider "utils" {
 }
