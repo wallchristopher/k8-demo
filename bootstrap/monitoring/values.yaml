@@ -10,6 +10,6 @@ kube-prometheus-stack:
       thanos:
         objectStorageConfig:
           secret:
-            type: FILESYSEM
+            type: FILESYSTEM
             config:
               directory: /tmp
