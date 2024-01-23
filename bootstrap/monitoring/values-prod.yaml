@@ -4,6 +4,7 @@ kube-prometheus-stack:
   prometheus:
     prometheusSpec:
       serviceMonitorSelectorNilUsesHelmValues: false
+      replicas: 3
       resources:
         requests:
           memory: 1Gi
