@@ -7,11 +7,11 @@ data "utils_aws_eks_update_kubeconfig" "k8s_platform" {
 }
 
 resource "helm_release" "argocd" {
-  name             = "argocd"
-  repository       = "https://argoproj.github.io/argo-helm"
-  chart            = "argo-cd"
-  namespace        = "argocd"
-  create_namespace = true
+  name              = "argocd"
+  chart             = "${path.module}/../bootstrap/argo/"
+  namespace         = "argocd"
+  create_namespace  = true
+  dependency_update = true
 
   values = [
     "${file("${path.module}/../bootstrap/argo/values-${var.environment}.yaml")}"
