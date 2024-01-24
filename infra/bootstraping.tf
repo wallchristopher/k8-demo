@@ -1,6 +1,7 @@
 data "utils_aws_eks_update_kubeconfig" "k8s_platform" {
-  profile      = local.name
+  alias        = local.name
   cluster_name = local.name
+  profile      = "default"
 
   depends_on = [module.fargate_eks]
 }
