@@ -37,22 +37,8 @@ module "fargate_eks" {
 
   fargate_profiles = merge(
     {
-      k8s-platform = {
-        name = "k8s-platform"
-        selectors = [
-          {
-            namespace = "default"
-          }
-        ]
-        subnet_ids = var.private_subnets
-        timeouts = {
-          create = "20m"
-          delete = "20m"
-        }
-      }
-
-      argocd = {
-        name = "argocd"
+      argo = {
+        name = "argo"
         selectors = [
           {
             namespace = "argocd"
@@ -64,26 +50,11 @@ module "fargate_eks" {
           delete = "20m"
         }
       }
-
       monitoring = {
         name = "monitoring"
         selectors = [
           {
             namespace = "monitoring"
-          }
-        ]
-        subnet_ids = var.private_subnets
-        timeouts = {
-          create = "20m"
-          delete = "20m"
-        }
-      }
-
-      core = {
-        name = "core"
-        selectors = [
-          {
-            namespace = "core"
           }
         ]
         subnet_ids = var.private_subnets
