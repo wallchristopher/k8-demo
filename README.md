@@ -23,17 +23,6 @@ Run the following commands within the root of this repo to deploy the platform t
 ```bash
 terraform -chdir=./infra init
 terraform -chdir=./infra apply
-
-aws eks update-kubeconfig --name k8s-platform
-
-helm repo add argo https://argoproj.github.io/argo-helm
-helm install argocd argo/argo-cd \
-  --namespace argocd \
-  --create-namespace \
-  --dependency-update
-helm upgrade argocd ./bootstrap/argo/ \
-  --namespace argocd \
-  -f ./bootstrap/argo/values.yaml
 ```
 
 The [setup](setup) script contains the above commands with some error handling.
