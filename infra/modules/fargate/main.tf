@@ -44,7 +44,7 @@ module "fargate_eks" {
             namespace = "default"
           }
         ]
-        subnet_ids = [var.private_subnets]
+        subnet_ids = var.private_subnets
         timeouts = {
           create = "20m"
           delete = "20m"
@@ -58,7 +58,7 @@ module "fargate_eks" {
             namespace = "argocd"
           }
         ]
-        subnet_ids = [var.private_subnets]
+        subnet_ids = var.private_subnets
         timeouts = {
           create = "20m"
           delete = "20m"
@@ -72,7 +72,7 @@ module "fargate_eks" {
             namespace = "monitoring"
           }
         ]
-        subnet_ids = [var.private_subnets]
+        subnet_ids = var.private_subnets
         timeouts = {
           create = "20m"
           delete = "20m"
@@ -86,7 +86,7 @@ module "fargate_eks" {
             namespace = "core"
           }
         ]
-        subnet_ids = [var.private_subnets]
+        subnet_ids = var.private_subnets
         timeouts = {
           create = "20m"
           delete = "20m"
