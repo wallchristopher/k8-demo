@@ -2,6 +2,10 @@ kube-prometheus-stack:
   nodeExporter:
     enabled: false
   prometheus:
+    thanosService:
+      enabled: true
+    thanosServiceMonitor:
+      enabled: true
     prometheusSpec:
       serviceMonitorSelectorNilUsesHelmValues: false
       replicas: 3
