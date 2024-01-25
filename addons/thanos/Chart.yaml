@@ -1,0 +1,11 @@
+apiVersion: v2
+name: thanos
+description: A helm chart that pulls in the bitnami/thanos chart
+type: application
+version: 0.0.1
+
+dependencies:
+  - name: thanos
+    version: 12.21.1
+    repository: https://charts.bitnami.com/bitnami
+    condition: .global.thanos.enabled
