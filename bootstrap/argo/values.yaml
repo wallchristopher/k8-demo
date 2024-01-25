@@ -62,6 +62,19 @@ argocd-apps:
       namespaceResourceWhitelist:
         - group: '*'
           kind: '*'
+    - name: addons
+      description: Contains applications that are conditionaly deployed.
+      destinations:
+        - namespace: '*'
+          server: '*'
+      sourceRepos:
+        - '*'
+      clusterResourceWhitelist:
+        - group: '*'
+          kind: '*'
+      namespaceResourceWhitelist:
+        - group: '*'
+          kind: '*'
   applications:
     - name: argocd
       namespace: argocd
@@ -69,6 +82,7 @@ argocd-apps:
       source:
         helm:
           valueFiles:
+            - $values/bootstrap/base-values.yaml
             - values.yaml
         repoURL: https://github.com/wallchristopher/k8s-platform.git
         targetRevision: HEAD
@@ -107,6 +121,7 @@ argocd-apps:
           path: 'bootstrap/{{name}}'
           helm:
             valueFiles:
+            - $values/bootstrap/base-values.yaml
             - values.yaml
         destination:
           server: https://kubernetes.default.svc
