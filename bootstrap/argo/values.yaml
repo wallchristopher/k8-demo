@@ -154,7 +154,7 @@ argocd-apps:
         source:
           repoURL: https://github.com/wallchristopher/k8s-platform.git
           targetRevision: HEAD
-          path: 'bootstrap/{{name}}'
+          path: 'addons/{{name}}'
           helm:
             valueFiles:
             - $values/bootstrap/base-values.yaml
