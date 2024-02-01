@@ -1,4 +1,5 @@
 thanos:
   query:
-    sidecarsService: "prometheus-operated"
-    sidecarsNamespace: "monitoring"
+    dnsDiscovery:
+      sidecarsService: "prometheus-operated"
+      sidecarsNamespace: "monitoring"
