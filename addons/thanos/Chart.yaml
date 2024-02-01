@@ -8,6 +8,4 @@ dependencies:
   - name: thanos
     version: 12.21.1
     repository: https://charts.bitnami.com/bitnami
-    condition: .Values.global.thanos.enabled
-    tags:
-      - global
+    condition: global.thanos.enabled
