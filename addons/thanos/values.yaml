@@ -1,0 +1,4 @@
+thanos:
+  query:
+    sidecarsService: "prometheus-operated"
+    sidecarsNamespace: "monitoring"
