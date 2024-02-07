@@ -39,7 +39,7 @@ resource "kubernetes_secret" "thanos_s3_bucket" {
   type = "Opaque"
 
   data = {
-    thanos_s3_bucket = yamlencode({
+    thanos-s3-bucket = yamlencode({
       "thanos-s3-bucket.yaml" : {
         "type" : "s3",
         "config" : {
