@@ -23,7 +23,7 @@ resource "helm_release" "argocd" {
   namespace = "argocd"
 
   values = [
-    "${file("${path.module}/../bootstrap/argo/values-${var.environment}.yaml")}"
+    file("${path.module}/../bootstrap/argo/values-${var.environment}.yaml")
   ]
 
   depends_on = [

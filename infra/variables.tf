@@ -9,9 +9,3 @@ variable "environment" {
   description = "The type of environment to deploy to"
   default     = "prod"
 }
-
-variable "thanos_enabled" {
-  type        = bool
-  description = "Whether or not to deploy thanos"
-  default     = true
-}
