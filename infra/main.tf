@@ -19,7 +19,6 @@ module "fargate_eks" {
   cluster_version = local.cluster_version
   azs             = local.azs
   vpc_id          = module.vpc.vpc_id
-  public_subnets  = module.vpc.public_subnets
   private_subnets = module.vpc.private_subnets
   intra_subnets   = module.vpc.intra_subnets
 
@@ -69,4 +68,12 @@ module "vpc" {
   private_subnet_tags = {
     "kubernetes.io/role/internal-elb" = 1
   }
+}
+
+resource "null_resource" "kubectl" {
+  provisioner "local-exec" {
+    command = "aws eks update-kubeconfig --name ${local.name}"
+  }
+
+  depends_on = [module.fargate_eks]
 }

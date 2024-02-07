@@ -3,9 +3,11 @@ module "thanos_fargate_profile" {
   version = "~> 19.0"
 
   name         = "thanos"
-  cluster_name = local.name
+  cluster_name = module.fargate_eks[0].cluster_name
 
-  subnet_ids = [module.vpc.private_subnets[1]]
+  subnet_ids = [
+    module.vpc.private_subnets[1]
+  ]
   selectors = [
     {
       namespace = "thanos"
