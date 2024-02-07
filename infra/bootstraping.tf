@@ -21,4 +21,10 @@ resource "helm_release" "argocd" {
   depends_on = [
     null_resource.kubectl
   ]
+
+  lifecycle {
+    ignore_changes = [
+      values
+    ]
+  }
 }
