@@ -23,6 +23,7 @@ resource "helm_release" "argocd" {
   ]
 
   lifecycle {
+    prevent_destroy = true
     ignore_changes = [
       values
     ]
