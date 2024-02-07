@@ -22,6 +22,8 @@ module "fargate_eks" {
   public_subnets  = module.vpc.public_subnets
   private_subnets = module.vpc.private_subnets
   intra_subnets   = module.vpc.intra_subnets
+
+  thanos_s3_bucket_name = module.thanos_s3_bucket.s3_bucket_arn
 }
 
 ##########################

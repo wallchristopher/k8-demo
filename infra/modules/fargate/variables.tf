@@ -35,3 +35,8 @@ variable "intra_subnets" {
   type        = list(string)
   description = "The IDs of the intra subnets within the VPC"
 }
+
+variable "thanos_s3_bucket_name" {
+  type        = string
+  description = "The name of the S3 bucket to store Thanos metrics (REQUIRED)"
+}

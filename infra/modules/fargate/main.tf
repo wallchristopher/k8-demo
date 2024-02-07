@@ -52,6 +52,9 @@ module "fargate_eks" {
       }
       monitoring = {
         name = "monitoring"
+        iam_role_additional_policies = {
+          thanos = aws_iam_policy.thanos.arn
+        }
         selectors = [
           {
             namespace = "monitoring"
@@ -88,6 +91,28 @@ resource "aws_iam_policy" "additional" {
         ]
         Effect   = "Allow"
         Resource = "*"
+      },
+    ]
+  })
+}
+
+resource "aws_iam_policy" "thanos" {
+  name = "${var.cluster_name}-thanos"
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "s3:GetObject",
+          "s3:ListBucket",
+          "s3:PutObject",
+          "s3:DeleteObject"
+        ]
+        Effect = "Allow"
+        Resource = [
+          var.thanos_s3_bucket_name,
+          "${var.thanos_s3_bucket_name}/*",
+        ]
       },
     ]
   })
