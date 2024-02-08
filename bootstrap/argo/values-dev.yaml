@@ -1,27 +1,31 @@
-argo-cd:
-  applicationSet:
-    replicas: 2
-  controller:
-    replicas: 2
-    resources:
-      limits:
-        cpu: 2
-        memory: 4Gi
-      requests:
-        cpu: 1
-        memory: 2Gi
-  server:
-    autoscaling:
-      enabled: true
-      minReplicas: 2
-  redis-ha:
-    enabled: true
-  repoServer:
-    autoscaling:
-      enabled: true
-      minReplicas: 2
-
 argocd-apps:
+  projects:
+    - name: core
+      description: Contains applications that are always deployed.
+      destinations:
+        - namespace: '*'
+          server: '*'
+      sourceRepos:
+        - '*'
+      clusterResourceWhitelist:
+        - group: '*'
+          kind: '*'
+      namespaceResourceWhitelist:
+        - group: '*'
+          kind: '*'
+    - name: addons
+      description: Contains applications that are conditionaly deployed.
+      destinations:
+        - namespace: '*'
+          server: '*'
+      sourceRepos:
+        - '*'
+      clusterResourceWhitelist:
+        - group: '*'
+          kind: '*'
+      namespaceResourceWhitelist:
+        - group: '*'
+          kind: '*'
   applications:
     - name: argocd
       namespace: argocd
@@ -29,8 +33,9 @@ argocd-apps:
       source:
         helm:
           valueFiles:
+            - $values/bootstrap/base-values.yaml
             - values.yaml
-            - values-prod.yaml
+            - values-dev.yaml
         repoURL: https://github.com/wallchristopher/k8s-platform.git
         targetRevision: HEAD
         path: bootstrap/argo
@@ -46,29 +51,33 @@ argocd-apps:
     additionalLabels: {}
     additionalAnnotations: {}
     generators:
-    - git:
-        repoURL: https://github.com/wallchristopher/k8s-platform.git
-        revision: HEAD
-        directories:
-        - path: bootstrap/monitoring
+    - list:
+        elements:
+        - name: monitoring
+          namespace: monitoring
+        - name: istio
+          namespace: istio-system
+        - name: kubescape
+          namespace: kubescape
     template:
       metadata:
-        name: '{{path.basename}}'
+        name: '{{name}}'
         labels:
-          project: '{{path.basename}}'
+          project: '{{name}}'
         annotations: {}
       spec:
         project: core
         source:
           repoURL: https://github.com/wallchristopher/k8s-platform.git
           targetRevision: HEAD
-          path: '{{path}}'
+          path: 'bootstrap/{{name}}'
           helm:
             valueFiles:
-            - values-prod.yaml
+            - $values/bootstrap/base-values.yaml
+            - values.yaml
         destination:
           server: https://kubernetes.default.svc
-          namespace: '{{path.basename}}'
+          namespace: '{{namespace}}'
         syncPolicy:
           automated:
             selfHeal: true
@@ -102,7 +111,6 @@ argocd-apps:
             valueFiles:
             - $values/bootstrap/base-values.yaml
             - values.yaml
-            - values-prod.yaml
         destination:
           server: https://kubernetes.default.svc
           namespace: '{{namespace}}'
