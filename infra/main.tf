@@ -72,7 +72,7 @@ module "vpc" {
 
 resource "null_resource" "kubectl" {
   provisioner "local-exec" {
-    command = "aws eks update-kubeconfig --name ${local.name}"
+    command = "aws eks update-kubeconfig --name ${local.name} --alias ${local.name}"
   }
 
   depends_on = [module.fargate_eks]

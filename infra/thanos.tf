@@ -26,32 +26,29 @@ module "thanos_s3_bucket" {
   force_destroy            = true
 }
 
-resource "kubernetes_namespace" "thanos" {
+resource "kubernetes_namespace" "monitoring" {
   metadata {
-    name = "thanos"
+    name = "monitoring"
   }
 }
 
 resource "kubernetes_secret" "thanos_s3_bucket" {
   metadata {
     name      = "thanos-s3-bucket"
-    namespace = "thanos"
+    namespace = "monitoring"
   }
 
   type = "Opaque"
 
   data = {
-    thanos-s3-bucket = yamlencode({
-      "thanos-s3-bucket.yaml" : {
-        "type" : "s3",
-        "config" : {
-          "bucket" : module.thanos_s3_bucket.s3_bucket_id,
-          "endpoint" : "s3.us-east-1.amazonaws.com",
-          "encryptsse" : "true"
-        }
+    "thanos-s3-bucket.yaml" = yamlencode({
+      type : "s3",
+      config : {
+        bucket : module.thanos_s3_bucket.s3_bucket_id,
+        endpoint : "s3.us-east-1.amazonaws.com"
       }
     })
   }
 
-  depends_on = [kubernetes_namespace.thanos]
+  depends_on = [kubernetes_namespace.monitoring]
 }
