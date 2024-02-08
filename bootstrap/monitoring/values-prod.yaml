@@ -14,6 +14,7 @@ kube-prometheus-stack:
           memory: 1Gi
           cpu: 1
       thanos:
-        existingSecret:
-          name: thanos-s3-bucket
-          key: thanos-s3-bucket
+        objectStorageConfig:
+          existingSecret:
+            name: thanos-s3-bucket
+            key: thanos-s3-bucket.yaml
