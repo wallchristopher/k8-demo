@@ -21,6 +21,6 @@ helm install argocd argo/argo-cd \
   --dependency-update
 helm upgrade argocd ./bootstrap/argo/ \
   --namespace argocd \
-  -f ./bootstrap/argo/values.yaml, \
+  -f ./bootstrap/argo/values.yaml \
   -f ./bootstrap/argo/values-dev.yaml
 ```

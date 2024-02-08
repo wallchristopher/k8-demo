@@ -6,7 +6,7 @@ kube-prometheus-stack:
       enabled: true
     prometheusSpec:
       serviceMonitorSelectorNilUsesHelmValues: false
-      replicas: 2
+      replicas: 1
       thanos:
         objectStorageConfig:
           secret:
