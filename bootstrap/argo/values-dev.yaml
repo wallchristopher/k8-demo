@@ -120,5 +120,6 @@ argocd-apps:
           syncOptions:
           - CreateNamespace=true
           - ServerSideApply=true
+          - Prune=true
     syncPolicy:
       preserveResourcesOnDeletion: false
