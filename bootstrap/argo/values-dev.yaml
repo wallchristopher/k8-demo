@@ -45,6 +45,9 @@ argocd-apps:
       syncPolicy:
         automated:
           selfHeal: true
+        managedNamespaceMetadata:
+          labels:
+            istio-injection: "enabled"
   applicationsets:
   - name: core
     namespace: argocd
