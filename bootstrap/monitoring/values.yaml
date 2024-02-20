@@ -13,3 +13,14 @@ kube-prometheus-stack:
             type: FILESYSTEM
             config:
               directory: /tmp
+      additionalScrapeConfigs:
+        - job_name: 'istiod'
+          kubernetes_sd_configs:
+            - role: endpoints
+              namespaces:
+                names:
+                  - istio-system
+          relabel_configs:
+            - source_labels: [__meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
+              action: keep
+              regex: istiod;http-monitoring
