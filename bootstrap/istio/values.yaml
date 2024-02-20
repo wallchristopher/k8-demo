@@ -2,3 +2,7 @@ kiali-operator:
   cr:
     create: true
     namespace: istio-system
+    spec:
+      external_services:
+        prometheus:
+          url: http://monitoring-kube-prometheus-prometheus.monitoring:9090
