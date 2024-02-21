@@ -47,7 +47,7 @@ argocd-apps:
           selfHeal: true
         managedNamespaceMetadata:
           labels:
-            istio-injection: "enabled"
+            istio-injection: "disabled"
   applicationsets:
   - name: core
     namespace: argocd
