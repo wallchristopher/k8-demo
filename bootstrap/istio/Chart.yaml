@@ -11,6 +11,9 @@ dependencies:
   - name: istiod
     version: 1.20.0
     repository: https://istio-release.storage.googleapis.com/charts
+  - name: istio-gateway
+    version: 1.20.0
+    repository: https://istio-release.storage.googleapis.com/charts
   - name: kiali-operator
     version: 1.77.0
     repository: https://kiali.org/helm-charts
