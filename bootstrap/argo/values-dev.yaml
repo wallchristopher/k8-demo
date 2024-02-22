@@ -64,7 +64,7 @@ argocd-apps:
           istio-injection: disabled
         - name: istio-gateway
           namespace: gateway
-          istio-injection: disabled
+          istio-injection: enabled
         - name: kubescape
           namespace: kubescape
           istio-injection: enabled
