@@ -58,10 +58,16 @@ argocd-apps:
         elements:
         - name: monitoring
           namespace: monitoring
+          istio-injection: disabled
         - name: istio
           namespace: istio-system
+          istio-injection: disabled
+        - name: istio-gateway
+          namespace: gateway
+          istio-injection: disabled
         - name: kubescape
           namespace: kubescape
+          istio-injection: enabled
     template:
       metadata:
         name: '{{name}}'
@@ -86,7 +92,7 @@ argocd-apps:
             selfHeal: true
           managedNamespaceMetadata:
             labels:
-              istio-injection: "disabled"
+              istio-injection: '{{istio-injection}}'
           syncOptions:
           - CreateNamespace=true
           - ServerSideApply=true

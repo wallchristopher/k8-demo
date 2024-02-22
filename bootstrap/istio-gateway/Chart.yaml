@@ -1,0 +1,10 @@
+apiVersion: v2
+name: istio-gateway
+description: A helm chart that pulls in the istio gateway chart
+type: application
+version: 0.0.1
+
+dependencies:
+  - name: gateway
+    version: 1.20.0
+    repository: https://istio-release.storage.googleapis.com/charts
