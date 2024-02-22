@@ -59,26 +59,20 @@ argocd-apps:
         - name: monitoring
           namespace: monitoring
           istio-injection: disabled
-          sync-wave: 1
         - name: istio
           namespace: istio-system
-          sync-wave: 0
           istio-injection: disabled
         - name: istio-gateway
           namespace: gateway
-          sync-wave: 1
           istio-injection: enabled
         - name: kubescape
           namespace: kubescape
           istio-injection: enabled
-          sync-wave: 1
     template:
       metadata:
         name: '{{name}}'
         labels:
           project: '{{name}}'
-        annotations:
-          argocd.argoproj.io/sync-wave: '{{sync-wave}}'
       spec:
         project: core
         source:
