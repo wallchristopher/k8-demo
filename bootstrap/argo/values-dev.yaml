@@ -65,6 +65,10 @@ argocd-apps:
       syncPolicy:
         automated:
           selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+        preserveResourcesOnDeletion: false
   applicationsets:
   - name: addons
     namespace: argocd
