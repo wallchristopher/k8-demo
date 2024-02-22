@@ -48,55 +48,24 @@ argocd-apps:
         managedNamespaceMetadata:
           labels:
             istio-injection: "enabled"
-  applicationsets:
-  - name: core
-    namespace: argocd
-    additionalLabels: {}
-    additionalAnnotations: {}
-    generators:
-    - list:
-        elements:
-        - name: monitoring
-          namespace: monitoring
-          istio-injection: disabled
-        - name: istio
-          namespace: istio-system
-          istio-injection: disabled
-        - name: istio-gateway
-          namespace: gateway
-          istio-injection: enabled
-        - name: kubescape
-          namespace: kubescape
-          istio-injection: enabled
-    template:
-      metadata:
-        name: '{{name}}'
-        labels:
-          project: '{{name}}'
-      spec:
-        project: core
-        source:
-          repoURL: https://github.com/wallchristopher/k8s-platform.git
-          targetRevision: HEAD
-          path: 'bootstrap/{{name}}'
-          helm:
-            valueFiles:
+    - name: platform
+      namespace: platform
+      project: core
+      source:
+        helm:
+          valueFiles:
             - $values/bootstrap/base-values.yaml
             - values.yaml
-        destination:
-          server: https://kubernetes.default.svc
-          namespace: '{{namespace}}'
-        syncPolicy:
-          automated:
-            selfHeal: true
-          managedNamespaceMetadata:
-            labels:
-              istio-injection: '{{istio-injection}}'
-          syncOptions:
-          - CreateNamespace=true
-          - ServerSideApply=true
-    syncPolicy:
-      preserveResourcesOnDeletion: false
+        repoURL: "https://github.com/wallchristopher/k8s-platform.git"
+        targetRevision: HEAD
+        path: bootstrap/platform
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: platform
+      syncPolicy:
+        automated:
+          selfHeal: true
+  applicationsets:
   - name: addons
     namespace: argocd
     additionalLabels: {}
