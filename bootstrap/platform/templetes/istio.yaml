@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: istio
+  namespace: argocds
+spec:
+  destination:
+    namespace: istio-system
+    server: https://kubernetes.default.svc
+  project: core
+  source:
+    path: bootstrap/istio
+    repoURL: https://github.com/wallchristopher/k8s-platform.git
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+        - $values/bootstrap/base-values.yaml
+        - values.yaml
+  syncPolicy:
+    automated:
+      selfHeal: true
+    managedNamespaceMetadata:
+      labels:
+        istio-injection: "enabled"
+    syncOptions:
+      - CreateNamespace=true
+      - Prune=true
