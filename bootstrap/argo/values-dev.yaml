@@ -49,7 +49,7 @@ argocd-apps:
           labels:
             istio-injection: "enabled"
     - name: platform
-      namespace: platform
+      namespace: argocd
       project: core
       source:
         helm:
@@ -68,7 +68,6 @@ argocd-apps:
         syncOptions:
           - CreateNamespace=true
           - ServerSideApply=true
-        preserveResourcesOnDeletion: false
   applicationsets:
   - name: addons
     namespace: argocd
