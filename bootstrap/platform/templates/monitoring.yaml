@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: monitoring
+  namespace: argocd
+spec:
+  destination:
+    namespace: monitoring
+    server: https://kubernetes.default.svc
+  project: core
+  source:
+    path: bootstrap/monitoring
+    repoURL: https://github.com/wallchristopher/k8s-platform.git
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+        - $values/bootstrap/base-values.yaml
+        - values.yaml
+  syncPolicy:
+    automated:
+      selfHeal: true
+    managedNamespaceMetadata:
+      labels:
+        istio-injection: "disabled"
+    syncOptions:
+      - CreateNamespace=true
+      - Prune=true
