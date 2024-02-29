@@ -21,7 +21,7 @@ spec:
       selfHeal: true
     managedNamespaceMetadata:
       labels:
-        istio-injection: "disabled"
+        istio-injection: "enabled"
     syncOptions:
       - CreateNamespace=true
       - Prune=true
