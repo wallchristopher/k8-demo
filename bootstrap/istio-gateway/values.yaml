@@ -2,6 +2,10 @@ istio-ingressgateway:
   name: istio-ingressgateway
   service:
     ports:
+    - name: status-port
+      protocol: TCP
+      port: 15021
+      targetPort: 15021
     - name: http2
       protocol: TCP
       port: 9001
