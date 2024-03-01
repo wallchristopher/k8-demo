@@ -5,7 +5,7 @@ kiali-operator:
     spec:
       deployment:
         pod_annotations:
-          poxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
+          proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
       external_services:
         prometheus:
           url: http://monitoring-kube-prometheus-prometheus.monitoring:9090
