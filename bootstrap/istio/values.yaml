@@ -3,6 +3,9 @@ kiali-operator:
     create: true
     namespace: istio-system
     spec:
+      deployment:
+        pod_annotations:
+          poxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
       external_services:
         prometheus:
           url: http://monitoring-kube-prometheus-prometheus.monitoring:9090
