@@ -1,6 +1,7 @@
 istio-ingressgateway:
   name: istio-ingressgateway
   service:
+    type: NodePort
     ports:
     - name: status-port
       protocol: TCP
