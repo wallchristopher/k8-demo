@@ -4,3 +4,6 @@ istio-egressgateway:
   name: istio-egressgateway
   service:
     type: ClusterIP
+  labels:
+    app: istio-egressgateway
+    istio: egressgateway
