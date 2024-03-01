@@ -8,4 +8,4 @@ kiali-operator:
           url: http://monitoring-kube-prometheus-prometheus.monitoring:9090
         grafana:
           enabled: true
-          in_cluster_url: http://monitoring-kube-prometheus-grafana.monitoring:3000
+          in_cluster_url: http://monitoring-grafana.monitoring:3000
