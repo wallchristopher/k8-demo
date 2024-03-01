@@ -1,3 +1,6 @@
+istio-ingressgateway:
+  name: istio-ingressgateway
 istio-egressgateway:
+  name: istio-egressgateway
   service:
     type: ClusterIP
