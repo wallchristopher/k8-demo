@@ -1,4 +1,3 @@
 istio-egressgateway:
-  defaults:
-    service:
-      type: ClusterIP
+  service:
+    type: ClusterIP
