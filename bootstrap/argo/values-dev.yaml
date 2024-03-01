@@ -68,6 +68,9 @@ argocd-apps:
         syncOptions:
           - CreateNamespace=true
           - ServerSideApply=true
+        managedNamespaceMetadata:
+          labels:
+            istio-injection: "enabled"
   applicationsets:
   - name: addons
     namespace: argocd
