@@ -7,4 +7,4 @@ kiali-operator:
         prometheus:
           url: http://monitoring-kube-prometheus-prometheus.monitoring:9090
         grafana:
-          url: http://monitoring-kube-prometheus-grafana.monitoring
+          url: http://monitoring-kube-prometheus-grafana.monitoring:3000
