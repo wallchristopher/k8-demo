@@ -5,9 +5,11 @@ type: application
 version: 0.0.1
 
 dependencies:
-  - name: istio-ingressgateway
+  - name: gateway
     version: 1.20.0
     repository: https://istio-release.storage.googleapis.com/charts
-  - name: istio-egressgateway
+    alias: istio-ingressgateway
+  - name: gateway
     version: 1.20.0
     repository: https://istio-release.storage.googleapis.com/charts
+    alias: istio-egressgateway
