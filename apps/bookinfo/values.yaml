@@ -116,3 +116,6 @@ gateway:
       protocol: HTTP
     selector:
       app: gateway
+
+virtualService:
+  name: bookinfo
