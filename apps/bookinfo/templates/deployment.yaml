@@ -25,3 +25,31 @@ spec:
         imagePullPolicy: {{ .Values.details.deployment.container.imagePullPolicy }}
         ports:
         - containerPort: {{ .Values.details.deployment.container.port }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ratings-v1
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: ratings
+    version: v1
+spec:
+  replicas: {{ .Values.ratings.deployment.replicaCount }}
+  selector:
+    matchLabels:
+      app: ratings
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: ratings
+        version: v1
+    spec:
+      serviceAccountName: {{ .Values.ratings.serviceAccount.name }}
+      containers:
+      - name: ratings
+        image: "{{ .Values.ratings.deployment.container.repo }}:{{ .Values.ratings.deployment.container.tag }}"
+        imagePullPolicy: {{ .Values.ratings.deployment.container.imagePullPolicy }}
+        ports:
+        - containerPort: {{ .Values.ratings.deployment.container.port }}

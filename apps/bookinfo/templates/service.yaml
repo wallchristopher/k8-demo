@@ -4,11 +4,24 @@ metadata:
   name: details
   namespace: {{ .Values.namespace }}
   labels:
-    app: details
-    service: details
+    {{- toYaml .Values.details.labels | nindent 4 }}
 spec:
   ports:
-    - port: {{ .Values.details.service.port }}
-      name: http
+    - port: {{ .Values.details.service.ports.port }}
+      name: {{ .Values.details.service.ports.name }}
   selector:
-    app: details
+    {{- toYaml .Values.details.selector | nindent 4}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ratings
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- toYaml .Values.ratings.labels | nindent 4 }}
+spec:
+  ports:
+    - port: {{ .Values.ratings.service.ports.port }}
+      name: {{ .Values.ratings.service.ports.name }}
+  selector:
+    {{- toYaml .Values.ratings.selector | nindent 4}}
