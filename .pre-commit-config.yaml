@@ -11,7 +11,7 @@ repos:
     - id: check-case-conflict
     - id: check-merge-conflict
     - id: check-yaml
-      exclude: '.*/templates/.*\.yaml'
+      exclude: '.*/templates/.*.yaml'
     - id: detect-private-key
     - id: end-of-file-fixer
     - id: name-tests-test
