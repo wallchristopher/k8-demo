@@ -176,3 +176,37 @@ spec:
         emptyDir: {}
       - name: wlp-output
         embtyDir: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: productpage
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: productpage
+    version: v1
+spec:
+  replicas: {{ .Values.productpage.deployment.replicaCount }}
+  selector:
+    matchLabels:
+      app: productpage
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: productpage
+        version: v1
+    spec:
+      serviceAccountName: {{ .Values.productpage.serviceAccount.name }}
+      containers:
+      - name: productpage
+        image: "{{ .Values.productpage.deployment.container.repo }}:{{ .Values.productpage.deployment.container.tag }}"
+        imagePullPolicy: {{ .Values.productpage.deployment.container.imagePullPolicy }}
+        ports:
+        - containerPort: {{ .Values.productpage.deployment.container.port }}
+        volumeMounts:
+        - name: tmp
+          mountPath: /tmp
+      volumes:
+      - name: tmp
+        emptyDir: {}

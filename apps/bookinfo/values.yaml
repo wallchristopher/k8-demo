@@ -83,3 +83,26 @@ reviews:
 
   serviceAccount:
     name: bookinfo-reviews
+
+productpage:
+  deployment:
+    replicas: 1
+    container:
+      repo: docker.io/istio/examples-bookinfo-productpage-v1
+      tag: 1.19.1
+      imagePullPolicy: IfNotPresent
+      port: 9080
+
+  labels:
+    app: productpage
+    service: productpage
+
+  service:
+    ports:
+      port: 9080
+      name: http
+    selector:
+      app: productpage
+
+  serviceAccount:
+    name: bookinfo-productpage
