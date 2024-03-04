@@ -106,3 +106,13 @@ productpage:
 
   serviceAccount:
     name: bookinfo-productpage
+
+gateway:
+  name: bookinfo-gateway
+  servers:
+    ports:
+      number: 8080
+      name: http
+      protocol: HTTP
+    selector:
+      app: gateway
