@@ -1,0 +1,20 @@
+namespace: bookinfo
+
+details:
+  deployment:
+    replicas: 1
+    container:
+      repo: docker.io/istio/examples-bookinfo-details-v1
+      tag: 1.19.1
+      imagePullPolicy: IfNotPresent
+      port: 9080
+
+  labels:
+    app: details
+    service: details
+
+  service:
+    port: 9080
+
+  serviceAccount:
+    name: bookinfo-details
