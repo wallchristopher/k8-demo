@@ -53,3 +53,126 @@ spec:
         imagePullPolicy: {{ .Values.ratings.deployment.container.imagePullPolicy }}
         ports:
         - containerPort: {{ .Values.ratings.deployment.container.port }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reviews-v1
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: reviews
+    version: v1
+spec:
+  replicas: {{ .Values.reviews.deployment.replicaCount }}
+  selector:
+    matchLabels:
+      app: reviews
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: reviews
+        version: v1
+    spec:
+      serviceAccountName: {{ .Values.reviews.serviceAccount.name }}
+      containers:
+      - name: reviews
+        image: "{{ .Values.reviews.deployment.v1.container.repo }}:{{ .Values.reviews.deployment.v1.container.tag }}"
+        imagePullPolicy: {{ .Values.reviews.deployment.v1.container.imagePullPolicy }}
+        ports:
+        - containerPort: {{ .Values.reviews.deployment.v1.container.port }}
+        env:
+        - name: LOG_DIR
+          value: "/tmp/logs"
+        volumeMounts:
+        - name: tmp
+          mountPath: /tmp
+        - name: wlp-output
+          mountPath: /opt/ibm/wlp/output
+      volumes:
+      - name: tmp
+        emptyDir: {}
+      - name: wlp-output
+        embtyDir: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reviews-v2
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: reviews
+    version: v2
+spec:
+  replicas: {{ .Values.reviews.deployment.replicaCount }}
+  selector:
+    matchLabels:
+      app: reviews
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: reviews
+        version: v2
+    spec:
+      serviceAccountName: {{ .Values.reviews.serviceAccount.name }}
+      containers:
+      - name: reviews
+        image: "{{ .Values.reviews.deployment.v2.container.repo }}:{{ .Values.reviews.deployment.v2.container.tag }}"
+        imagePullPolicy: {{ .Values.reviews.deployment.v2.container.imagePullPolicy }}
+        ports:
+        - containerPort: {{ .Values.reviews.deployment.v2.container.port }}
+        env:
+        - name: LOG_DIR
+          value: "/tmp/logs"
+        volumeMounts:
+        - name: tmp
+          mountPath: /tmp
+        - name: wlp-output
+          mountPath: /opt/ibm/wlp/output
+      volumes:
+      - name: tmp
+        emptyDir: {}
+      - name: wlp-output
+        embtyDir: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reviews-v3
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: reviews
+    version: v3
+spec:
+  replicas: {{ .Values.reviews.deployment.replicaCount }}
+  selector:
+    matchLabels:
+      app: reviews
+      version: v3
+  template:
+    metadata:
+      labels:
+        app: reviews
+        version: v3
+    spec:
+      serviceAccountName: {{ .Values.reviews.serviceAccount.name }}
+      containers:
+      - name: reviews
+        image: "{{ .Values.reviews.deployment.v3.container.repo }}:{{ .Values.reviews.deployment.v3.container.tag }}"
+        imagePullPolicy: {{ .Values.reviews.deployment.v3.container.imagePullPolicy }}
+        ports:
+        - containerPort: {{ .Values.reviews.deployment.v3.container.port }}
+        env:
+        - name: LOG_DIR
+          value: "/tmp/logs"
+        volumeMounts:
+        - name: tmp
+          mountPath: /tmp
+        - name: wlp-output
+          mountPath: /opt/ibm/wlp/output
+      volumes:
+      - name: tmp
+        emptyDir: {}
+      - name: wlp-output
+        embtyDir: {}

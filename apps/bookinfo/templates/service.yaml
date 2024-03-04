@@ -24,4 +24,18 @@ spec:
     - port: {{ .Values.ratings.service.ports.port }}
       name: {{ .Values.ratings.service.ports.name }}
   selector:
-    {{- toYaml .Values.ratings.selector | nindent 4}}
+    {{- toYaml .Values.ratings.service.selector | nindent 4}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: reviews
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- toYaml .Values.reviews.labels | nindent 4 }}
+spec:
+  ports:
+    - port: {{ .Values.reviews.service.ports.port }}
+      name: {{ .Values.reviews.service.ports.name }}
+  selector:
+    {{- toYaml .Values.reviews.service.selector | nindent 4}}
