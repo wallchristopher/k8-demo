@@ -1,79 +1,40 @@
-locals {
-  name            = "k8s-platform"
-  cluster_version = "1.28"
+module "eks" {
+  source  = "terraform-aws-modules/eks/aws"
+  version = "~> 20.0"
 
-  vpc_cidr = "10.0.0.0/16"
-  azs      = slice(data.aws_availability_zones.available.names, 0, 3)
-}
-
-#######################
-##### FARGATE EKS #####
-#######################
-
-module "fargate_eks" {
-  count = var.use_fargate_eks ? 1 : 0
-
-  source = "./modules/fargate"
-
-  cluster_name    = local.name
-  cluster_version = local.cluster_version
-  azs             = local.azs
-  vpc_id          = module.vpc.vpc_id
-  private_subnets = module.vpc.private_subnets
-  intra_subnets   = module.vpc.intra_subnets
-
-  thanos_s3_bucket_name = module.thanos_s3_bucket.s3_bucket_arn
-}
-
-##########################
-##### NODE GROUP EKS #####
-##########################
-
-module "node_eks" {
-  count = var.use_fargate_eks ? 0 : 1
-
-  source = "./modules/ec2_nodes"
-
-  cluster_name    = local.name
-  cluster_version = local.cluster_version
-  vpc_id          = module.vpc.vpc_id
-  public_subnets  = module.vpc.public_subnets
-  private_subnets = module.vpc.private_subnets
-  intra_subnets   = module.vpc.intra_subnets
-}
-
-################################
-##### SUPPORTING RESOURCES #####
-################################
-
-module "vpc" {
-  source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 4.0"
-
-  name = local.name
-  cidr = local.vpc_cidr
-
-  azs             = local.azs
-  private_subnets = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 4, k)]
-  public_subnets  = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k + 48)]
-  intra_subnets   = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k + 52)]
-
-  enable_nat_gateway = true
-  single_nat_gateway = true
-
-  public_subnet_tags = {
-    "kubernetes.io/role/elb" = 1
+  cluster_name    = var.eks_name
+  cluster_version = var.eks_version
+  cluster_addons = {
+    coredns                = {}
+    eks-pod-identity-agent = {}
+    kube-proxy             = {}
+    vpc-cni                = {}
   }
 
-  private_subnet_tags = {
-    "kubernetes.io/role/internal-elb" = 1
+  create_kms_key            = false
+  cluster_encryption_config = []
+
+  vpc_id     = module.vpc.vpc_id
+  subnet_ids = module.vpc.public_subnets
+
+  eks_managed_node_groups = {
+    default = {
+      ami_type       = "AL2_x86_64"
+      instance_types = ["t3.micro"]
+
+      min_size     = 3
+      max_size     = 3
+      desired_size = 3
+    }
   }
+
+  cloudwatch_log_group_retention_in_days = 1
 }
 
 resource "null_resource" "kubectl" {
   provisioner "local-exec" {
-    command = "aws eks update-kubeconfig --name ${local.name} --alias ${local.name}"
+    command = "aws eks update-kubeconfig --name ${var.eks_name} --alias ${var.eks_name}"
   }
 
-  depends_on = [module.fargate_eks]
+  depends_on = [module.eks]
 }
