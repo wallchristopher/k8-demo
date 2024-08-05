@@ -1,7 +1,7 @@
 variable "eks_name" {
   type        = string
   description = "The name of the EKS cluster"
-  default     = "k8s-platform"
+  default     = "platform"
 }
 
 variable "eks_version" {

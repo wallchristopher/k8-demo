@@ -12,17 +12,21 @@ repos:
       - id: sort-simple-yaml
       - id: trailing-whitespace
   - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.92.0
+    rev: v1.92.1
     hooks:
       - id: terraform_docs
       - id: terraform_fmt
       - id: terraform_tflint
       - id: terraform_validate
   - repo: https://github.com/norwoodj/helm-docs
-    rev: v1.13.1
+    rev: v1.14.2
     hooks:
       - id: helm-docs
   - repo: https://github.com/gruntwork-io/pre-commit
     rev: v0.1.23
     hooks:
       - id: helmlint
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.35.1
+    hooks:
+      - id: yamllint
