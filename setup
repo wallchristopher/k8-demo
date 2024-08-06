@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-terraform -chdir=./infra init
-terraform -chdir=./infra apply
+terraform -chdir=./platform/terraform init
+terraform -chdir=./platform/terraform apply
 
 helm repo add argo https://argoproj.github.io/argo-helm
 helm install argocd argo/argo-cd \

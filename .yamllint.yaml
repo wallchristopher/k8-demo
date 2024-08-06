@@ -1,5 +1,9 @@
 extends: default
 
+ignore:
+  - .terraform
+
 rules:
   document-start:
     present: false
+  line-length: disable

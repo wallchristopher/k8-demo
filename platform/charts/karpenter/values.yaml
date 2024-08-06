@@ -1,0 +1,4 @@
+karpenter:
+  settings:
+    clusterName: platform
+    interruptionQueue: platform
