@@ -1,36 +1,32 @@
-name: 'Terraform'
+name: ci
+run-name: ${{ github.base_ref }} ci
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'infra/**'
   pull_request:
     branches:
       - main
     paths:
-      - 'infra/**'
+      - '**.tf'
 
 permissions:
   contents: read
 
 jobs:
   terraform:
-    name: 'terraform'
+    name: terraform
     runs-on: ubuntu-latest
-    environment: production
-    defaults:
-      run:
-        shell: bash
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1
-    - name: Terraform Init
-      run: terraform init
-    - name: Terraform Format
-      run: terraform fmt -check
-    - name: Terraform Validate
-      run: terraform validate
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Init
+        run: terraform init
+
+      - name: Format
+        run: terraform fmt -check
+
+      - name: Terraform Validate
+        run: terraform validate
