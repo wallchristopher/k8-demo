@@ -2,8 +2,11 @@ extends: default
 
 ignore:
   - .terraform
+  - Chart.lock
+  - templates/**.yaml
 
 rules:
+  braces: disable
   document-start:
     present: false
   line-length: disable
