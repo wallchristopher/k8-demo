@@ -1,32 +1,54 @@
-name: ci
-run-name: ${{ github.base_ref }} ci
+name: terraform
 
 on:
   pull_request:
     branches:
       - main
     paths:
-      - '**.tf'
+      - "**.tf"
 
 permissions:
   contents: read
 
 jobs:
   terraform:
-    name: terraform
     runs-on: ubuntu-latest
+    concurrency: terraform
+    defaults:
+      run:
+        working-directory: platform/terraform
+    env:
+      TF_IN_AUTOMATION: "true"
     steps:
-      - name: Checkout
+      - name: checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Terraform
+      - name: setup terraform
         uses: hashicorp/setup-terraform@v3
 
-      - name: Init
-        run: terraform init
-
-      - name: Format
+      - name: fmt
+        id: fmt
         run: terraform fmt -check
 
-      - name: Terraform Validate
-        run: terraform validate
+      - name: init
+        id: init
+        run: terraform init -upgrade -input=false
+
+      - name: validate
+        id: validate
+        run: terraform validate -no-color
+
+      - name: tflint setup
+        uses: terraform-linters/setup-tflint@v4
+        id: tflint-setup
+        with:
+          tflint_version: "latest"
+          tflint_wrapper: "true"
+
+      - name: tflint init
+        id: tflint-init
+        run: tflint --init
+
+      - name: tflint check
+        id: tflint-check
+        run: tflint --var-file=tfvars/prod.tfvars
