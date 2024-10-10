@@ -1,10 +1,16 @@
 # k8s-platform
 
-Kubernetes platform that leverages diffent tools to help engineers build, deploy, run, maintain their code in a Kubernetes ecosystem.
+Kubernetes platform that leverages different tools to help engineers build, deploy, run, maintain their code in a Kubernetes ecosystem.
 
 ## Why?
 
 To play around with Kubernetes and various open source tools inside to see how they work and how they can be used to help engineers.
+
+## What's Inside?
+
+- [apps](apps) - Contains the applications that will be deployed to the Kubernetes cluster to test the platform.
+- [platform/terraform](terraform) - Contains the Terraform code to deploy the Kubernetes cluster to AWS.
+- [platform/helm](helm) - Contains the Helm charts to deploy the applications to the Kubernetes cluster.
 
 ## Getting Started
 
@@ -20,16 +26,11 @@ Pre-requisites:
 
 Run the following commands within the root of this repo to deploy the platform to the target AWS account.
 
-```bash
-terraform -chdir=./infra init
-terraform -chdir=./infra apply
-```
-
 The [setup](setup) script contains the above commands with some error handling.
 
 ### Local Development
 
-To deploy to a local cluster without any cloud provider requiremnts. Refer to the [local development](docs/local-development.md) documentation.
+To deploy to a local cluster without any cloud provider requirements. Refer to the [local development](docs/local-development.md) documentation.
 
 ## Documentation
 

@@ -1,9 +1,11 @@
 #!/bin/bash
 set -e
 
-read -p "Enter your cluster name: " clustername
+read -p "Enter your cluster name: " CLUSTER_NAME
 
-terraform -chdir=./platform/terraform init
-terraform -chdir=./platform/terraform apply
+TF_WORKDIR=$(platform/terraform)
 
-aws eks --region us-east-1 update-kubeconfig --name "$clustername"
+terraform -chdir=$TF_WORKDIR init
+terraform -chdir=$TF_WORKDIR apply -tfvars=$TF_WORKDIR/tfvars/prod.tfvars
+
+aws eks --region us-east-1 update-kubeconfig --name "$CLUSTER_NAME"
