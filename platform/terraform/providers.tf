@@ -3,6 +3,7 @@ provider "aws" {
   default_tags {
     tags = {
       name = "platform"
+      repo = "k8s-platform"
     }
   }
 }
