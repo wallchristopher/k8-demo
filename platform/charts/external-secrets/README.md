@@ -42,6 +42,8 @@ helm install external-secrets external-secrets/external-secrets
 | external-secrets.commonLabels.repo | string | `"k8s-platform"` |  |
 | external-secrets.commonLabels.serviceMonitor | object | `{"enabled":true}` | service monitor configuration |
 | external-secrets.commonLabels.serviceMonitor.enabled | bool | `true` | enable service monitor |
+| external-secrets.global | object | `{"topologySpreadConstraints":[{"labelSelector":{"matchLabels":{"app.kubernetes.io/name":"external-secrets"}},"maxSkew":1,"topologyKey":"kubernetes.io/hostname","whenUnsatisfiable":"ScheduleAnyway"}]}` | global configuration |
+| external-secrets.global.topologySpreadConstraints | list | `[{"labelSelector":{"matchLabels":{"app.kubernetes.io/name":"external-secrets"}},"maxSkew":1,"topologyKey":"kubernetes.io/hostname","whenUnsatisfiable":"ScheduleAnyway"}]` | topology spread constraints |
 | external-secrets.podDisruptionBudget | object | `{"enabled":true,"minAvailable":1}` | pod disruption budget configuration |
 | external-secrets.podDisruptionBudget.enabled | bool | `true` | - enable pod disruption budget |
 | external-secrets.podDisruptionBudget.minAvailable | int | `1` | - minimum available pods |

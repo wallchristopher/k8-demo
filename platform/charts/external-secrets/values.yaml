@@ -39,6 +39,18 @@ commonLabels:
 
 # external-secrets sub chart
 external-secrets:
+  # -- global configuration
+  global:
+    # -- topology spread constraints
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: external-secrets
+
+
   # additional labels for all resources
   commonLabels:
     repo: k8s-platform
