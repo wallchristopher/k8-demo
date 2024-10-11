@@ -1,0 +1,27 @@
+# -- metrics server configuration
+metrics-server:
+  # -- labels to apply to all resources
+  commonLabels:
+    repo: k8s-platform
+
+  # -- allow access to the /metrics endpoint
+  metrics:
+    enabled: true
+
+  # -- setup the service monitor for prometheus
+  serviceMonitor:
+    enabled: true
+
+  # -- setup the pod disruption budget
+  podDisruptionBudget:
+    enabled: true
+    minAvailable: 1
+
+  # -- topology spread constraints
+  topologySpreadConstraints:
+    - maxSkew: 1
+      topologyKey: kubernetes.io/hostname
+      whenUnsatisfiable: ScheduleAnyway
+      labelSelector:
+        matchLabels:
+          app.kubernetes.io/name: metrics-server
