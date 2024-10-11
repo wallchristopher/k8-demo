@@ -1,38 +1,34 @@
 kube-prometheus-stack:
+  # -- the prometheus operator configuration
   prometheus:
+    # -- service for thanos service discovery on sidecar
     thanosService:
       enabled: true
+
+    # --s serviceMonitor to scrape Sidecar metrics
+    ## needs thanosService to be enabled as well
     thanosServiceMonitor:
       enabled: true
+
+    ## -- Settings affecting prometheusSpec
+    ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#prometheusspec
     prometheusSpec:
+      # -- how long to retain metrics
+      retention: 1h
+
+      # -- default true, restricts Prometheus to only discover and scrape ServiceMonitors that match the release labels set by helm (itself in this case)
+      # setting to false allows the operators to add serviceMonitors defined externally
       serviceMonitorSelectorNilUsesHelmValues: false
+
+      ## -- number of replicas of each shard to deploy for a Prometheus deployment
+      ## number of replicas multiplied by shards is the total number of Pods created
       replicas: 1
+
+      ## -- thanos configuration allows configuring various aspects of a Prometheus server in a Thanos environment
       thanos:
+        # -- objectStorageConfig configures object storage in Thanos
         objectStorageConfig:
           secret:
             type: FILESYSTEM
             config:
               directory: /tmp
-      additionalScrapeConfigs:
-        - job_name: "istiod"
-          kubernetes_sd_configs:
-            - role: endpoints
-              namespaces:
-                names:
-                  - istio-system
-          relabel_configs:
-            - source_labels:
-                [
-                  __meta_kubernetes_service_name,
-                  __meta_kubernetes_endpoint_port_name,
-                ]
-              action: keep
-              regex: istiod;http-monitoring
-        - job_name: "envoy-stats"
-          metrics_path: /stats/prometheus
-          kubernetes_sd_configs:
-            - role: pod
-          relabel_configs:
-            - source_labels: [__meta_kubernetes_pod_container_port_name]
-              action: keep
-              regex: ".*-envoy-prom"
