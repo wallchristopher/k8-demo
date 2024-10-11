@@ -1,0 +1,15 @@
+apiVersion: v2
+name: external-secrets
+description: |
+  A Helm chart for deploying external-secrets operator
+  helm chart into the EKS cluster. This bridges the gap of passing secrets
+  and configuration between AWS and Kubernetes.
+
+type: application
+version: 1.0.0
+appVersion: "0.10"
+
+dependencies:
+  - name: external-secrets
+    version: ^0.10
+    repository: https://charts.external-secrets.io

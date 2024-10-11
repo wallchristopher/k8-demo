@@ -2,8 +2,8 @@ extends: default
 
 ignore:
   - .terraform
-  - Chart.lock
-  - templates/**.yaml
+  - '**/Chart.lock'
+  - '**/templates/**.yaml'
 
 rules:
   braces: disable

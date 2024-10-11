@@ -1,0 +1,21 @@
+{{ template "chart.header" . }}
+
+## Description
+
+This installs the {{ template "chart.name" . }} chart and all of its infrastructure
+through the use of helm and terraform.
+
+This chart includes custom resources for ExternalSecrets. Meaning the base chart and crds need to be installed
+first before installing this chart.
+
+```bash
+helm repo add external-secrets https://charts.external-secrets.io
+helm install external-secrets external-secrets/external-secrets
+```
+
+<!-- markdownlint-disable -->
+{{ template "chart.versionBadge" . }}{{ template "chart.typeBadge" . }}{{ template "chart.appVersionBadge" . }}
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}

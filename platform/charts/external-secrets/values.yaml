@@ -1,0 +1,59 @@
+# -- configuration for the cluster secret store
+## this can be accessed by all namespaces within the cluster
+clusterSecretStore:
+  secretsManager:
+    # -- additional labels for ClusterSecretStore
+    additionalLabels: {}
+
+    # name of the cluster secret store
+    name: secretsmanager
+
+    # -- provider configuration
+    provider:
+      # -- the secret provider
+      aws:
+        # -- the backend AWS service
+        service: SecretsManager
+        # -- AWS region
+        region: us-east-1
+
+  parameterStore:
+    # -- additional labels for ClusterSecretStore
+    additionalLabels: {}
+
+    # name of the cluster secret store
+    name: parameterstore
+
+    # -- provider configuration
+    provider:
+      # -- the secret provider
+      aws:
+        # -- the backend AWS service
+        service: ParameterStore
+        # -- AWS region
+        region: us-east-1
+
+# -- additional labels for all resources
+commonLabels:
+  repo: k8s-platform
+
+# external-secrets sub chart
+external-secrets:
+  # additional labels for all resources
+  commonLabels:
+    repo: k8s-platform
+
+    # -- the number of pods to run
+    replicaCount: 1
+
+    # -- service monitor configuration
+    serviceMonitor:
+      # -- enable service monitor
+      enabled: true
+
+  # -- pod disruption budget configuration
+  podDisruptionBudget:
+    # --- enable pod disruption budget
+    enabled: true
+    # --- minimum available pods
+    minAvailable: 1
