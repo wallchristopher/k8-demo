@@ -1,15 +1,17 @@
-apiVersion: karpenter.k8s.aws/v1beta1
+apiVersion: karpenter.k8s.aws/v1
 kind: EC2NodeClass
 metadata:
-  name: default
+  name: {{ .Values.default.name }}
+  labels:
+    {{- include "karpenter.labels" . | nindent 4 }}
 spec:
-  amiFamily: AL2
-  role: KarpenterNodeRole-platform
+  amiFamily: {{ .Values.default.amiFamily }}
+  role: {{ .Values.default.role }}
   subnetSelectorTerms:
     - tags:
-        karpenter.sh/discovery: platform
+        karpenter.sh/discovery: {{ .Values.karpenter.settings.clusterName }}
   securityGroupSelectorTerms:
     - tags:
-        karpenter.sh/discovery: platform
-  amiSelectorTerms:
-    - id: "${AMD_AMI_ID}"
+        karpenter.sh/discovery: {{ .Values.karpenter.settings.clusterName }}
+  tags:
+    karpenter.sh/discovery: {{ .Values.karpenter.settings.clusterName }}

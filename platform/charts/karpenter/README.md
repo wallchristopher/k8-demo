@@ -1,6 +1,6 @@
 # karpenter
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.37.0](https://img.shields.io/badge/AppVersion-0.37.0-informational?style=flat-square)
+![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 A Helm chart for Karpenter
 
@@ -8,14 +8,34 @@ A Helm chart for Karpenter
 
 | Repository | Name | Version |
 |------------|------|---------|
-| oci://public.ecr.aws/karpenter | karpenter | 0.37.0 |
+| oci://public.ecr.aws/karpenter | karpenter | ^1.0 |
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| karpenter.settings.clusterName | string | `"platform"` |  |
-| karpenter.settings.interruptionQueue | string | `"platform"` |  |
+| commonLabels | object | `{"repo":"k8s-platform"}` | labels to apply to all resources |
+| default | object | `{"amiFamily":"AL2","disruption":{"budgets":[{"nodes":"20%"}],"consolidateAfter":"15m","consolidationPolicy":"WhenEmptyOrUnderutilized"},"limits":{"cpu":20,"memory":"80Gi"},"name":"default","requirements":[{"key":"node.kubernetes.io/instance-category","operator":"In","values":["t"]},{"key":"karpenter.k8s.aws/instance-size","operator":"In","values":["small","medium"]},{"key":"karpenter.sh/capacity-type","operator":"In","values":["spot","on-demand"]},{"key":"topology.kubernetes.io/zone","operator":"In","values":["us-east-1a","us-east-1b","us-east-1c"]},{"key":"kubernetes.io/arch","operator":"In","values":["amd64"]}],"role":"karpenter-node"}` | Configuration for the Primary Kapenter NodePool and Class |
+| default.amiFamily | string | `"AL2"` | The amiFamily to use for the nodes |
+| default.disruption | object | `{"budgets":[{"nodes":"20%"}],"consolidateAfter":"15m","consolidationPolicy":"WhenEmptyOrUnderutilized"}` | The ways in which Karpenter can disrupt and replace Node |
+| default.disruption.budgets | list | `[{"nodes":"20%"}]` | Budgets control the speed Karpenter can scale down nodes |
+| default.disruption.consolidateAfter | string | `"15m"` | The amount of time Karpenter should wait to consolidate a node after a pod has been added or removed from the node |
+| default.disruption.consolidationPolicy | string | `"WhenEmptyOrUnderutilized"` | If a node has no running non-daemon pods, it is considered empty and can be consolidated |
+| default.limits | object | `{"cpu":20,"memory":"80Gi"}` | Resource limits constrain the total size of the pool Limits prevent Karpenter from creating new instances once the limit is exceeded |
+| default.name | string | `"default"` | NodePool name |
+| default.requirements | list | `[{"key":"node.kubernetes.io/instance-category","operator":"In","values":["t"]},{"key":"karpenter.k8s.aws/instance-size","operator":"In","values":["small","medium"]},{"key":"karpenter.sh/capacity-type","operator":"In","values":["spot","on-demand"]},{"key":"topology.kubernetes.io/zone","operator":"In","values":["us-east-1a","us-east-1b","us-east-1c"]},{"key":"kubernetes.io/arch","operator":"In","values":["amd64"]}]` | List of requirements that constrain the parameters of provisioned nodes within the pool |
+| default.requirements[0] | object | `{"key":"node.kubernetes.io/instance-category","operator":"In","values":["t"]}` | the instance category of the node |
+| default.requirements[1] | object | `{"key":"karpenter.k8s.aws/instance-size","operator":"In","values":["small","medium"]}` | the size of the instance |
+| default.requirements[2] | object | `{"key":"karpenter.sh/capacity-type","operator":"In","values":["spot","on-demand"]}` | The capacity type of the node, will default to spot unless either specified by the pod or no spot capacity is available |
+| default.requirements[3] | object | `{"key":"topology.kubernetes.io/zone","operator":"In","values":["us-east-1a","us-east-1b","us-east-1c"]}` | the Availability Zones to deploy the nodes |
+| default.requirements[4] | object | `{"key":"kubernetes.io/arch","operator":"In","values":["amd64"]}` | the architecture of the node |
+| default.role | string | `"karpenter-node"` | the role to use for node identity |
+| karpenter.additionalLabels | object | `{"repo":"k8s-platform"}` | Additional labels to add into metadata. |
+| karpenter.serviceMonitor | object | `{"enabled":true}` | prometheus service monitor configuration |
+| karpenter.serviceMonitor.enabled | bool | `true` | Specifies whether a ServiceMonitor should be created. |
+| karpenter.settings | object | `{"clusterName":"k8s-platform","interruptionQueue":"Karpenter"}` | Global Settings to configure Karpenter |
+| karpenter.settings.clusterName | string | `"k8s-platform"` | The name of the cluster |
+| karpenter.settings.interruptionQueue | string | `"Karpenter"` | Interruption queue is the name of the SQS queue used for processing interruption events from EC2 Interruption handling is disabled if not specified # Enabling interruption handling may require additional permissions on the controller service account. |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.14.2](https://github.com/norwoodj/helm-docs/releases/v1.14.2)

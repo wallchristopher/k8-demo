@@ -1,32 +1,21 @@
-apiVersion: karpenter.sh/v1beta1
+apiVersion: karpenter.sh/v1
 kind: NodePool
 metadata:
-  name: default
+  name: {{ .Values.default.name }}
+  labels:
+    {{- include "karpenter.labels" . | nindent 4 }}
 spec:
   template:
     spec:
-      requirements:
-        - key: kubernetes.io/arch
-          operator: In
-          values: ["amd64"]
-        - key: kubernetes.io/os
-          operator: In
-          values: ["linux"]
-        - key: karpenter.sh/capacity-type
-          operator: In
-          values: ["spot"]
-        - key: karpenter.k8s.aws/instance-category
-          operator: In
-          values: ["c", "m", "r"]
-        - key: karpenter.k8s.aws/instance-generation
-          operator: Gt
-          values: ["2"]
       nodeClassRef:
-        apiVersion: karpenter.k8s.aws/v1beta1
-        kind: EC2NodeClass
-        name: default
+        name: {{ .Values.default.name }}
+      requirements:
+        {{- .Values.default.requirements | toYaml | nindent 8 }}
   limits:
-    cpu: 1000
+    cpu: {{ .Values.default.limits.cpu }}
+    memory: {{ .Values.default.limits.memory }}
   disruption:
-    consolidationPolicy: WhenUnderutilized
-    expireAfter: 24h # 30 * 24h = 720h
+    consolidationPolicy: {{ .Values.default.disruption.consolidationPolicy }}
+    consolidateAfter: {{ .Values.default.disruption.consolidateAfter }}
+    budgets:
+      {{- .Values.default.disruption.budgets | toYaml | nindent 4 }}

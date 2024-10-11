@@ -72,8 +72,10 @@ module "karpenter" {
   enable_pod_identity             = true
   create_pod_identity_association = true
 
-  # Since the node group role will already have an access entry
-  create_access_entry = false
+  node_iam_role_use_name_prefix = false
+  node_iam_role_name            = "karpenter-node"
 
-  namespace = "karpenter"
+  enable_v1_permissions = true
+
+  queue_name = "Karpenter"
 }

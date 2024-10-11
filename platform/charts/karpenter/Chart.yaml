@@ -3,9 +3,9 @@ name: karpenter
 description: A Helm chart for Karpenter
 type: application
 version: 1.0.0
-appVersion: 0.37.0
+appVersion: 1.0.0
 
 dependencies:
   - name: karpenter
-    version: "0.37.0"
+    version: ^1.0
     repository: oci://public.ecr.aws/karpenter

@@ -1,4 +1,70 @@
+# -- labels to apply to all resources
+commonLabels:
+  repo: k8s-platform
+
+# -- Configuration for the Primary Kapenter NodePool and Class
+default:
+  # -- The amiFamily to use for the nodes
+  amiFamily: AL2
+
+  # -- the role to use for node identity
+  role: karpenter-node
+
+  # -- NodePool name
+  name: default
+
+  # -- List of requirements that constrain the parameters of provisioned nodes within the pool
+  requirements:
+    # -- the instance category of the node
+    - key: node.kubernetes.io/instance-category
+      operator: In
+      values: ["t"]
+    # -- the size of the instance
+    - key: karpenter.k8s.aws/instance-size
+      operator: In
+      values: ["small", "medium"]
+    # -- The capacity type of the node, will default to spot unless either specified by the pod or no spot capacity is available
+    - key: karpenter.sh/capacity-type
+      operator: In
+      values: ["spot", "on-demand"]
+    # -- the Availability Zones to deploy the nodes
+    - key: topology.kubernetes.io/zone
+      operator: In
+      values: ["us-east-1a", "us-east-1b", "us-east-1c"]
+    # -- the architecture of the node
+    - key: "kubernetes.io/arch"
+      operator: In
+      values: ["amd64"]
+
+  # -- Resource limits constrain the total size of the pool
+  # Limits prevent Karpenter from creating new instances once the limit is exceeded
+  limits:
+    cpu: 20
+    memory: 80Gi
+  # -- The ways in which Karpenter can disrupt and replace Node
+  disruption:
+    # -- If a node has no running non-daemon pods, it is considered empty and can be consolidated
+    consolidationPolicy: WhenEmptyOrUnderutilized
+    # -- The amount of time Karpenter should wait to consolidate a node after a pod has been added or removed from the node
+    consolidateAfter: 15m
+    # -- Budgets control the speed Karpenter can scale down nodes
+    budgets:
+      - nodes: 20%
+
 karpenter:
+  # -- Additional labels to add into metadata.
+  additionalLabels:
+    repo: k8s-platform
+
+  # -- Global Settings to configure Karpenter
   settings:
-    clusterName: platform
-    interruptionQueue: platform
+    # -- The name of the cluster
+    clusterName: k8s-platform
+    # -- Interruption queue is the name of the SQS queue used for processing interruption events from EC2 Interruption handling is disabled if not specified
+    ## Enabling interruption handling may require additional permissions on the controller service account.
+    interruptionQueue: Karpenter
+
+  # -- prometheus service monitor configuration
+  serviceMonitor:
+    # -- Specifies whether a ServiceMonitor should be created.
+    enabled: true
