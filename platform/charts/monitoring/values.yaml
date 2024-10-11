@@ -1,15 +1,6 @@
 kube-prometheus-stack:
   # -- the prometheus operator configuration
   prometheus:
-    # -- service for thanos service discovery on sidecar
-    thanosService:
-      enabled: true
-
-    # --s serviceMonitor to scrape Sidecar metrics
-    ## needs thanosService to be enabled as well
-    thanosServiceMonitor:
-      enabled: true
-
     ## -- Settings affecting prometheusSpec
     ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#prometheusspec
     prometheusSpec:
@@ -23,12 +14,3 @@ kube-prometheus-stack:
       ## -- number of replicas of each shard to deploy for a Prometheus deployment
       ## number of replicas multiplied by shards is the total number of Pods created
       replicas: 1
-
-      ## -- thanos configuration allows configuring various aspects of a Prometheus server in a Thanos environment
-      thanos:
-        # -- objectStorageConfig configures object storage in Thanos
-        objectStorageConfig:
-          secret:
-            type: FILESYSTEM
-            config:
-              directory: /tmp

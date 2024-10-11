@@ -1,5 +1,0 @@
-thanos:
-  query:
-    dnsDiscovery:
-      sidecarsService: "prometheus-operated"
-      sidecarsNamespace: "monitoring"
