@@ -9,8 +9,8 @@ To play around with Kubernetes and various open source tools inside to see how t
 ## What's Inside?
 
 - [apps](apps) - Contains the applications that will be deployed to the Kubernetes cluster to test the platform.
-- [platform/terraform](terraform) - Contains the Terraform code to deploy the Kubernetes cluster to AWS.
-- [platform/helm](helm) - Contains the Helm charts to deploy the applications to the Kubernetes cluster.
+- [terraform](platform/terraform) - Contains the Terraform code to deploy the Kubernetes cluster to AWS.
+- [helm](platform/charts) - Contains the Helm charts to deploy the applications to the Kubernetes cluster.
 
 ## Getting Started
 
@@ -26,7 +26,7 @@ Pre-requisites:
 
 Run the following commands within the root of this repo to deploy the platform to the target AWS account.
 
-The [setup](setup) script contains the above commands with some error handling.
+The [setup](setup.sh) script contains the above commands with some error handling.
 
 ### Local Development
 
