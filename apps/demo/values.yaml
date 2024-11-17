@@ -1,3 +1,0 @@
-nginx:
-  nameOverride: "demo"
-  replicaCount: 4
