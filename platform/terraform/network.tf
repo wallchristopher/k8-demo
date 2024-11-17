@@ -17,26 +17,22 @@ module "vpc" {
   enable_dns_hostnames    = true
   map_public_ip_on_launch = true
 
-  azs = local.azs
-  // Database Subnets /22)
-  database_subnets = [for index, az in local.azs : cidrsubnet(var.vpc_cidr, 6, index + 30)]
+  azs              = local.azs
+  database_subnets = [for index, az in local.azs : cidrsubnet(var.vpc_cidr, 6, index)]
   database_subnet_tags = {
     tier = "database"
   }
-  // Private Subnets /18
-  private_subnets = [for index, az in local.azs : cidrsubnet(var.vpc_cidr, 2, index)]
+  private_subnets = [for index, az in local.azs : cidrsubnet(var.vpc_cidr, 3, index + 2)]
   private_subnet_tags = {
     tier                              = "private"
     "kubernetes.io/role/internal-elb" = 1
   }
-  // Public Subnets /22
-  public_subnets = [for index, az in local.azs : cidrsubnet(var.vpc_cidr, 6, index + 10)]
+  public_subnets = [for index, az in local.azs : cidrsubnet(var.vpc_cidr, 8, index + 20)]
   public_subnet_tags = {
     tier                     = "public"
     "kubernetes.io/role/elb" = 1
   }
-  // Intra Subnets /22
-  intra_subnets = [for index, az in local.azs : cidrsubnet(var.vpc_cidr, 6, index + 20)]
+  intra_subnets = [for index, az in local.azs : cidrsubnet(var.vpc_cidr, 8, index + 30)]
   intra_subnet_tags = {
     tier                     = "intra"
     "kubernetes.io/role/elb" = 1
