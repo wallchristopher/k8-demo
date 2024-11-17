@@ -3,7 +3,7 @@
 ## Requirements
 
 - [Docker](https://docs.docker.com/get-docker/)
-- [Rancher Desktop](https://rancherdesktop.io/)
+- [Kind](https://kind.sigs.k8s.io/)
 - [Helm](https://helm.sh/docs/intro/install/)
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 
