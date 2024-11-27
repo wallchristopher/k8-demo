@@ -1,7 +1,12 @@
-name: terraform
+name: ci
 
 on:
   pull_request:
+    branches:
+      - main
+    paths:
+      - "**.tf"
+  push:
     branches:
       - main
     paths:
@@ -22,9 +27,6 @@ jobs:
     steps:
       - name: checkout repository
         uses: actions/checkout@v4
-
-      - name: setup terraform
-        uses: hashicorp/setup-terraform@v3
 
       - name: fmt
         id: fmt
