@@ -28,6 +28,9 @@ module "eks" {
     core = {
       ami_type       = "BOTTLEROCKET_x86_64"
       instance_types = ["t3.medium"]
+      labels = {
+        "group" = "core"
+      }
 
       min_size     = 3
       max_size     = 5
@@ -44,8 +47,7 @@ module "external_secrets_pod_identity" {
   source  = "terraform-aws-modules/eks-pod-identity/aws"
   version = "~> 1.0"
 
-  name            = "external-secrets"
-  use_name_prefix = false
+  name = "external-secrets"
 
   attach_external_secrets_policy        = true
   external_secrets_create_permission    = true
@@ -72,8 +74,7 @@ module "karpenter" {
   enable_pod_identity             = true
   create_pod_identity_association = true
 
-  node_iam_role_use_name_prefix = false
-  node_iam_role_name            = "karpenter-node"
+  node_iam_role_name = "karpenter-node"
 
   enable_v1_permissions = true
 
