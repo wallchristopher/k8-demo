@@ -50,7 +50,6 @@ external-secrets:
           matchLabels:
             app.kubernetes.io/name: external-secrets
 
-
   # additional labels for all resources
   commonLabels:
     repo: k8s-platform

@@ -23,6 +23,9 @@ on:
 permissions:
   contents: read # required to checkout the repository
 
+concurrency:
+  group: ci
+
 jobs:
   what-changed:
     name: what changed
@@ -50,6 +53,7 @@ jobs:
     if: ${{ needs.what-changed.outputs.yaml == 'true' || github.event.inputs.yamllint == 'true' }}
     name: yamllint
     runs-on: ubuntu-latest
+    needs: what-changed
     steps:
       - name: checkout repository
         uses: actions/checkout@v4
@@ -65,7 +69,7 @@ jobs:
     if: ${{ needs.what-changed.outputs.terraform == 'true' || github.event.inputs.terraform == 'true' }}
     name: terraform
     runs-on: ubuntu-latest
-    concurrency: terraform
+    needs: what-changed
     defaults:
       run:
         working-directory: platform/terraform
