@@ -4,19 +4,66 @@ on:
   pull_request:
     branches:
       - main
-    paths:
-      - "**.tf"
   push:
     branches:
       - main
-    paths:
-      - "**.tf"
+  workflow_dispatch:
+    inputs:
+      terraform:
+        description: Run terraform
+        type: boolean
+        required: false
+        default: false
+      yamllint:
+        description: Run yamllint
+        type: boolean
+        required: false
+        default: false
 
 permissions:
-  contents: read
+  contents: read # required to checkout the repository
 
 jobs:
+  what-changed:
+    name: what changed
+    runs-on: ubuntu-latest
+    outputs:
+      terraform: ${{ steps.changed-directories.outputs.terraform_any_changed }}
+      yaml: ${{ steps.changed-directories.outputs.yaml_any_changed }}
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: changed directories
+        id: changed-directories
+        uses: tj-actions/changed-files@v44
+        with:
+          files_yaml: |
+            terraform:
+              - platform/terraform/**
+            yaml:
+              - '**.yaml'
+
+  yamllint:
+    if: ${{ needs.what-changed.outputs.yaml == 'true' || github.event.inputs.yamllint == 'true' }}
+    name: yamllint
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+
+      - name: install yamllint
+        run: pip install yamllint
+
+      - name: run yamllint
+        id: yamllint
+        run: yamllint .
+
   terraform:
+    if: ${{ needs.what-changed.outputs.terraform == 'true' || github.event.inputs.terraform == 'true' }}
+    name: terraform
     runs-on: ubuntu-latest
     concurrency: terraform
     defaults:
